@@ -33,41 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/iconHistorie"
-            android:text="Historie"
+            android:text="Otevrena historie"
             android:textSize="20sp"
             android:textColor="#ffffff"
             android:layout_marginStart="16dp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/buttonPrehledVydaju"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@id/buttonHistorie"
-        android:layout_alignParentStart="true"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:onClick="openPrehledVydajuFragment"
-        android:background="?android:attr/selectableItemBackground">
-
-        <ImageView
-            android:id="@+id/iconPrehledVydaju"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
-            android:layout_marginEnd="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/iconPrehledVydaju"
-            android:text="Přehled výdajů"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:layout_marginStart="16dp" />
-    </RelativeLayout>
 
 </RelativeLayout>
