@@ -1,17 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
+    android:background="#000000"
     tools:context=".Finance">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finace Fragment"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/buttonHistorie"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:onClick="openHistorieFragment">
+
+        <ImageView
+            android:id="@+id/iconHistorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" /> <!-- Větší mezera mezi obrázkem a textem -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconHistorie"
+            android:text="Historie"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" /> <!-- Větší mezera mezi obrázkem a textem -->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonPrehledVydaju"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/buttonHistorie"
+        android:layout_alignParentStart="true"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:onClick="openPrehledVydajuFragment">
+
+        <ImageView
+            android:id="@+id/iconPrehledVydaju"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" /> <!-- Větší mezera mezi obrázkem a textem -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconPrehledVydaju"
+            android:text="Přehled výdajů"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" /> <!-- Větší mezera mezi obrázkem a textem -->
+    </RelativeLayout>
+
+</RelativeLayout>
