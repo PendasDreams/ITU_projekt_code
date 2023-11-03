@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Spojení"
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_search_24"/>
+    <item android:title="Profile"
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_baseline_person_24"/>
+    <item android:title="Settings"
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_baseline_settings_24"/>
+    <item android:title="Finance"
+        android:id="@+id/Finance"
+        android:icon="@drawable/baseline_attach_money"/>
+    <item android:title="Více"
+        android:id="@+id/Vice"
+        android:icon="@drawable/baseline_menu_24"/>
+</menu>
