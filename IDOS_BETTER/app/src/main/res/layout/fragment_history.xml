@@ -37,8 +37,7 @@
         android:id="@+id/editTextCasOd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="56dp"
         android:hint="Čas od"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
@@ -109,15 +108,5 @@
         android:textColor="#000000"
         android:background="#ffffff" />
 
-    <!-- Tlačítko pro aktualizaci -->
-    <Button
-        android:id="@+id/buttonUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonPridat"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Update"
-        android:textColor="#000000"
-        android:background="#ffffff" />
+
 </RelativeLayout>

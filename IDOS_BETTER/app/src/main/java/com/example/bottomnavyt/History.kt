@@ -1,10 +1,14 @@
 package com.example.bottomnavyt
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import java.math.BigDecimal
+import java.util.Date
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,6 +20,22 @@ private const val ARG_PARAM2 = "param2"
  * Use the [History.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+class History_obj {
+    var casOd: Date? = null
+    var casDo: Date? = null
+    var mistoOd: String = ""
+    var mistoDo: String = ""
+    var cena: Int = 0
+
+    constructor(casOd: Date?, casDo: Date?, mistoOd: String, mistoDo: String, cena: Int) {
+        this.casOd = casOd
+        this.casDo = casDo
+        this.mistoOd = mistoOd
+        this.mistoDo = mistoDo
+        this.cena = cena
+    }
+}
 class History : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
