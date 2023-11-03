@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import com.example.bottomnavyt.History
+
 
 class Finance : Fragment() {
     private var param1: String? = null

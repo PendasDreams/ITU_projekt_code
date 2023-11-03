@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#000000"
     tools:context=".Finance">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <!-- Set the title "Finance" in white text -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finance"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:layout_gravity="start" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Tlačítka Historie a Přehled výdajů jsou nyní pod AppBarLayoutem -->
     <RelativeLayout
         android:id="@+id/buttonHistorie"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:onClick="openHistorieFragment"
-        android:background="?android:attr/selectableItemBackground"> <!-- Přidáno zvýraznění kliknutí -->
+        android:background="?android:attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/iconHistorie"
@@ -43,8 +69,8 @@
         android:id="@+id/buttonPrehledVydaju"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@id/buttonHistorie"
-        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:onClick="openPrehledVydajuFragment"
@@ -70,4 +96,6 @@
             android:layout_marginStart="16dp" />
     </RelativeLayout>
 
-</RelativeLayout>
+    <!-- Add the rest of your content here -->
+
+</LinearLayout>
