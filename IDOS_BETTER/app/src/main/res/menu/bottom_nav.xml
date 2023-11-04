@@ -13,7 +13,7 @@
     <item android:title="Finance"
         android:id="@+id/Finance"
         android:icon="@drawable/baseline_attach_money"/>
-    <item android:title="Více"
+    <item android:title="Menu"
         android:id="@+id/Vice"
         android:icon="@drawable/baseline_menu_24"/>
 </menu>

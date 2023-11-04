@@ -1,18 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
+    android:orientation="vertical"
+    android:background="#000000"
     tools:context=".More">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Lišta "Více" -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="More Fragment"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <!-- Název lišty "Více" v bílém textu -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:layout_gravity="start" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Tlačítka pro SMS jízdenku, Cestující, Nastavení, Nápověda, Podpora a Kontakty -->
+    <RelativeLayout
+        android:id="@+id/buttonSMSJizdenka"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconSMSJizdenka"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconSMSJizdenka"
+            android:text="SMS Jízdenka"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonCestujici"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconCestujici"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconCestujici"
+            android:text="Cestující"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonNastaveni"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconNastaveni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconNastaveni"
+            android:text="Nastavení"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonNapoveda"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconNapoveda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconNapoveda"
+            android:text="Nápověda"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonPodporaKontakty"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconPodporaKontakty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconPodporaKontakty"
+            android:text="Podpora a kontakty"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonInformace"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconInformace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconInformace"
+            android:text="Informace"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
 
 
-</FrameLayout>
+
+</LinearLayout>
