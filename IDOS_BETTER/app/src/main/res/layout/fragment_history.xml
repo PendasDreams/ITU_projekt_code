@@ -108,16 +108,39 @@
         android:textColor="#000000"
         android:background="#ffffff" />
 
-    <TextView
-        android:id="@+id/textViewResult"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/resultLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonPridat"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text=""
+        android:background="@drawable/text_view_background"
+        android:padding="16dp"
         android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textSize="18sp">
 
+    <!-- Levá část TextView (casOd, casDo, mistoDo) -->
+    <TextView
+        android:id="@+id/textViewResultLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:text="" />
+
+    <!-- Pravá část TextView (cena) -->
+    <TextView
+        android:id="@+id/textViewResultRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:text="" />
+
+</RelativeLayout>
 
 </RelativeLayout>

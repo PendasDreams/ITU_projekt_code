@@ -3,12 +3,14 @@ package com.example.bottomnavyt
 import DataBaseHandler
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import java.util.Date
@@ -36,7 +38,9 @@ class History : Fragment() {
     private lateinit var editTextMistoDo: EditText
     private lateinit var editTextCena: EditText
     private lateinit var buttonPridat: Button
-    private lateinit var textViewResult: TextView
+    private lateinit var textViewResultLeft: TextView
+    private lateinit var textViewResultRight: TextView
+    private lateinit var resultLayout: RelativeLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,36 +55,55 @@ class History : Fragment() {
         editTextMistoDo = view.findViewById(R.id.editTextMistoDo)
         editTextCena = view.findViewById(R.id.editTextCena)
         buttonPridat = view.findViewById(R.id.buttonPridat)
-        textViewResult = view.findViewById(R.id.textViewResult)
+        textViewResultLeft = view.findViewById(R.id.textViewResultLeft)
+        textViewResultRight = view.findViewById(R.id.textViewResultRight)
+        resultLayout = view.findViewById(R.id.resultLayout)
 
         // Set click listener for the "Přidat" button
         buttonPridat.setOnClickListener {
             try {
-                val data = getFormData() // Získání hodnot z formuláře
-                val dbHandler = DataBaseHandler(requireContext()) // Vytvoření instance DataBaseHandler
+                val data = getFormData()
+                val dbHandler = DataBaseHandler(requireContext())
 
                 // Vložení dat do databáze
                 val insertedId = dbHandler.insertData(data)
 
-                // Získání aktuálního textu z TextView
-                val currentText = textViewResult.text.toString()
+                // Nastavení textu pro levý a pravý TextView
+                textViewResultLeft.text = "${data.casOd} ${data.casDo} -> ${data.mistoDo}"
+                textViewResultRight.text = "${data.cena} Kč"
 
-                // Vytvoření řetězce obsahujícího data z objektu History_obj
-                val newData = "Cas od: ${data.casOd}, Cas do: ${data.casDo}, Misto od: ${data.mistoOd}, Misto do: ${data.mistoDo}, Cena: ${data.cena}"
+                // Nastavení vzhledu TextView pro vylepšený vzhled
+                resultLayout.setBackgroundResource(R.drawable.text_view_background) // Nastavte pozadí
+                textViewResultLeft.setTextColor(Color.WHITE) // Nastavte barvu textu pro levý TextView
+                textViewResultRight.setTextColor(Color.WHITE) // Nastavte barvu textu pro pravý TextView
+                textViewResultLeft.textSize = 18f // Nastavte velikost textu pro levý TextView
+                textViewResultRight.textSize = 18f // Nastavte velikost textu pro pravý TextView
+
+                // Získání aktuálního textu z levého a pravého TextView
+                val currentTextLeft = textViewResultLeft.text.toString()
+                val currentTextRight = textViewResultRight.text.toString()
 
                 // Vytvoření nového textu, který zahrnuje předchozí data a nová data
-                val newText = "$currentText\nData byla úspěšně vložena s ID: $insertedId\n$newData"
+                val newTextLeft = "$currentTextLeft"
+                val newTextRight = "$currentTextRight"
 
-                // Aktualizace textu v TextView
-                textViewResult.text = newText
+                // Aktualizace textu v levém a pravém TextView
+                textViewResultLeft.text = newTextLeft
+                textViewResultRight.text = newTextRight
+
+                // Zde můžete vypsat zprávu o úspěšném vložení dat s ID, pokud je to potřeba
+                //val message = "Data byla úspěšně vložena s ID: $insertedId"
+                //textViewResultLeft.text = message
+
             } catch (e: Exception) {
                 val errorMessage = "Chyba při vkládání dat: ${e.message}"
-                textViewResult.text = errorMessage
+                textViewResultLeft.text = errorMessage
             }
         }
 
         return view
     }
+
     private fun getFormData(): History_obj {
         val casOd = editTextCasOd.text.toString()
         val casDo = editTextCasDo.text.toString()
@@ -98,7 +121,7 @@ class History : Fragment() {
         val insertedId = dbHandler.insertData(data)
 
         val message = "Data byla úspěšně vložena s ID: $insertedId"
-        textViewResult.text = message
+        textViewResultLeft.text = message
     }
 
     companion object {
