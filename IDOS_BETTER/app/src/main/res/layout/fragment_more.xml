@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
+            android:src="@drawable/baseline_mail_white"
             android:layout_marginEnd="16dp" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
+            android:src="@drawable/baseline_cestujici"
             android:layout_marginEnd="16dp" />
 
         <TextView
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
+            android:src="@drawable/baseline_settings_white"
             android:layout_marginEnd="16dp" />
 
         <TextView
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
+            android:src="@drawable/baseline_question_mark_24"
             android:layout_marginEnd="16dp" />
 
         <TextView
@@ -172,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
+            android:src="@drawable/baseline_phone_24"
             android:layout_marginEnd="16dp" />
 
         <TextView
@@ -202,7 +202,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
+            android:src="@drawable/baseline_info_24"
             android:layout_marginEnd="16dp" />
 
         <TextView
