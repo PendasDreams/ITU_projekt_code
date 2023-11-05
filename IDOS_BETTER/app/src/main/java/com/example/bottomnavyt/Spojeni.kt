@@ -1,12 +1,12 @@
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import DataBaseHandler
+import android.database.Cursor
 import com.example.bottomnavyt.R
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -23,7 +23,17 @@ class Spojeni : Fragment() {
         }
     }
 
-    @SuppressLint("Range")
+    private fun displaySpojeniData(view: View) {
+        val textView = view.findViewById<TextView>(R.id.textView)
+
+        val odkudValues = dbHelper.getAllOdkudValues()
+
+        for (odkudValue in odkudValues) {
+            // Display data in the TextView
+            textView.append("Odkud: $odkudValue\n")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,19 +46,8 @@ class Spojeni : Fragment() {
         // Insert data into the Spojeni table
         dbHelper.insertSpojeni("Praha", "Brno")
 
-        // Get and display data from the Spojeni table
-        val spojeniData = dbHelper.getAllSpojeni()
-        if (spojeniData.moveToFirst()) {
-            val textView = view.findViewById<TextView>(R.id.textView)
-            do {
-                val odkudValue = spojeniData.getString(spojeniData.getColumnIndex(DataBaseHandler.COL_ODKUD))
-                val kamValue = spojeniData.getString(spojeniData.getColumnIndex(DataBaseHandler.COL_KAM))
-
-                // Display data in the TextView
-                textView.append("Odkud: $odkudValue, Kam: $kamValue\n")
-            } while (spojeniData.moveToNext())
-        }
-        spojeniData.close()
+        // Get and display data from the Spojeni table using the new function
+        displaySpojeniData(view)
 
         return view
     }

@@ -68,7 +68,28 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     fun getAllSpojeni(): Cursor {
         val db = this.readableDatabase
-        return db.query(TABLE_SPOJENI, null, null, null, null, null, null)
+        val query = "SELECT * FROM $TABLE_SPOJENI"
+        return db.rawQuery(query, null)
+    }
+
+    fun getAllOdkudValues(): List<String> {
+        val db = this.readableDatabase
+        val query = "SELECT $COL_ODKUD FROM $TABLE_SPOJENI"
+        val cursor = db.rawQuery(query, null)
+
+        val odkudValues = mutableListOf<String>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val odkudValue = cursor.getString(cursor.getColumnIndex(COL_ODKUD))
+                odkudValues.add(odkudValue)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+
+        return odkudValues
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
