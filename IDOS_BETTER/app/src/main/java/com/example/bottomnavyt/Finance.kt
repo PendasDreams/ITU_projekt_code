@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.ImageView
 import com.example.bottomnavyt.History
 
 
@@ -37,6 +38,12 @@ class Finance : Fragment() {
             openPrehledVydajuFragment()
         }
 
+        val buttonAddEntry = view.findViewById<ImageView>(R.id.addNewEntry)
+        buttonAddEntry.setOnClickListener {
+            openAddCreditFragment()
+        }
+
+
         return view
     }
 
@@ -56,6 +63,14 @@ class Finance : Fragment() {
         fragmentTransaction.replace(R.id.frame_layout, expensesOverviewFragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    private fun openAddCreditFragment() {
+        val addCreditFragment = AddCredit.newInstance() // Replace with the actual new fragment class
+        val transaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_layout, addCreditFragment) // Use your container id
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     companion object {

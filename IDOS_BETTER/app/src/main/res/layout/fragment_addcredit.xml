@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    tools:context=".AddCredit">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <!-- Set the title "Finance" in white text -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dobijeni kreditu"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:layout_gravity="start" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Input for Credit Amount -->
+    <EditText
+        android:id="@+id/editTextCreditAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CZK"
+        android:gravity="center"
+        android:inputType="number"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:backgroundTint="#ffffff"/>
+
+    <!-- Quick Add Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <!-- Define buttons for +100 CZK, +200 CZK, etc. -->
+        <!-- Button Styles and OnClickListener attributes need to be defined -->
+    </LinearLayout>
+
+    <!-- Pay by Card Button -->
+    <!-- Button Style needs to be defined -->
+    <Button
+        android:id="@+id/btnPayByCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Zaplatit kreditní kartou"
+        android:layout_margin="16dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:drawableStart="@drawable/baseline_credit_card_24"/>
+
+    <!-- Credit Top-Up History -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Historie dobíjení kreditu"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:padding="16dp" />
+
+    <!-- List of Top-Ups (Placeholder Data) -->
+    <ListView
+        android:id="@+id/listViewTopUps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp">
+        <!-- Adapter and data handling need to be implemented in the Fragment class -->
+    </ListView>
+
+</LinearLayout>

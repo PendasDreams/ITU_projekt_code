@@ -31,7 +31,28 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Current Credit Display -->
+        <TextView
+            android:id="@+id/currentCredit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aktuální kredit\n375.5 CZK"
+            android:textSize="34sp"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"/>
+
+        <!-- Add New Entry Button -->
+        <ImageView
+            android:id="@+id/addNewEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_input_add"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
 
     <!-- Tlačítka Historie a Přehled výdajů jsou nyní pod AppBarLayoutem -->
     <RelativeLayout
