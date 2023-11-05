@@ -32,7 +32,10 @@ class Finance : Fragment() {
             openHistorieFragment()
         }
 
-
+        val buttonPrehledVydaju = view.findViewById<RelativeLayout>(R.id.buttonPrehledVydaju)
+        buttonPrehledVydaju.setOnClickListener {
+            openPrehledVydajuFragment()
+        }
 
         return view
     }
@@ -46,6 +49,14 @@ class Finance : Fragment() {
         fragmentTransaction.commit()
     }
 
+    fun openPrehledVydajuFragment() {
+        val expensesOverviewFragment = ExpensesOverview.newInstance("param1", "param2")
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, expensesOverviewFragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
 
     companion object {
         private const val ARG_PARAM1 = "param1"
