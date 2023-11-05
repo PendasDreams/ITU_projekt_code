@@ -10,6 +10,8 @@ import android.widget.ImageView
 import com.example.bottomnavyt.History
 
 
+
+
 class Home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
@@ -36,10 +38,10 @@ class Home : Fragment() {
     }
 
     fun openSpojeniFragment() {
-        val spojeniFragment = Spojeni.newInstance("param1", "param2")
+        val spojeniFragment = Spojeni.newInstance("semilasso", "husitská")
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout,spojeniFragment )
+        fragmentTransaction.replace(R.id.frame_layout, spojeniFragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }

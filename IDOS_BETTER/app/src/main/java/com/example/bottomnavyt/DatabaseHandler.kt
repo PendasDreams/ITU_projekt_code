@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.example.bottomnavyt.History_obj
+import android.database.Cursor
+
 
 const val TAG = "DataBaseHandler"
 
@@ -20,6 +22,10 @@ val TABLE_CREDITS = "Credits"
 val COL_CREDIT_AMOUNT = "CreditAmount"
 val COL_ID = "ID"
 
+val TABLE_SPOJENI = "Spojeni"
+val COL_ODKUD = "Odkud"
+val COL_KAM = "Kam"
+
 class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
         val createTable =
@@ -31,15 +37,38 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_CENA DECIMAL(10,2))"
         db?.execSQL(createTable)
 
+        val createSpojeniTable =
+            "CREATE TABLE $TABLE_SPOJENI (" +
+                    "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "$COL_ODKUD VARCHAR(255)," +
+                    "$COL_KAM VARCHAR(255))"
+        db?.execSQL(createSpojeniTable)
+
         val createCreditsTable =
             "CREATE TABLE $TABLE_CREDITS (" +
-                    "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," + // Added a primary key for the table
+                    "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "$COL_CREDIT_AMOUNT DECIMAL(10,2))"
         db?.execSQL(createCreditsTable)
 
         val initialValues = ContentValues()
         initialValues.put(COL_CREDIT_AMOUNT, 0.0)
         db?.insert(TABLE_CREDITS, null, initialValues)
+    }
+
+    fun insertSpojeni(odkud: String, kam: String): Long {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(COL_ODKUD, odkud)
+            put(COL_KAM, kam)
+        }
+        val id = db.insert(TABLE_SPOJENI, null, contentValues)
+        db.close()
+        return id
+    }
+
+    fun getAllSpojeni(): Cursor {
+        val db = this.readableDatabase
+        return db.query(TABLE_SPOJENI, null, null, null, null, null, null)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
