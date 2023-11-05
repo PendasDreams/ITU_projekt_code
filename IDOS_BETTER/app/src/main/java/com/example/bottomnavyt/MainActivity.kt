@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
 
                 R.id.home -> replaceFragment(Home())
-                R.id.profile -> replaceFragment(Profile())
-                R.id.settings -> replaceFragment(Settings())
+                R.id.odjezdy -> replaceFragment(Profile())
+                R.id.jizdenky -> replaceFragment(Settings())
                 R.id.Vice -> replaceFragment(More())
                 R.id.Finance -> replaceFragment(Finance())
 
