@@ -1,17 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
-    tools:context=".Home">
+    android:orientation="vertical"
+    android:background="#000000"
+    tools:context=".Finance">
 
-    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <!-- Set the title "Finance" in white text -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finance"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:layout_gravity="start" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Current Credit Display -->
     <TextView
+        android:id="@+id/currentCredit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aktuální kredit\n375.5 CZK"
+        android:textSize="34sp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"/>
+
+    <!-- Add New Entry Button -->
+    <ImageView
+        android:id="@+id/addNewEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home Fragment"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
+        android:src="@android:drawable/ic_input_add"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"/>
 
-</FrameLayout>
+    <!-- Tlačítka Historie a Přehled výdajů jsou nyní pod AppBarLayoutem -->
+    <RelativeLayout
+        android:id="@+id/buttonHistorie"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:onClick="openHistorieFragment"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconHistorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconHistorie"
+            android:text="Historie"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonPrehledVydaju"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:onClick="openPrehledVydajuFragment"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iconPrehledVydaju"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_menu_24"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconPrehledVydaju"
+            android:text="Přehled výdajů"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <!-- Add the rest of your content here -->
+
+</LinearLayout>
