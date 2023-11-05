@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context=".Profile">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <!-- Název lišty "Historie" v bílém textu -->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Odjezdy"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Obdélník s textem pod lištou -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp">
+
+        <!-- Malý modrý obdélník -->
+        <!-- Změna barvy na tmavě fialovou -->
+
+        <!-- Text "Všechny jízdní řády" -->
+        <!-- Tučný text -->
+        <View
+            android:id="@+id/rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="#310081" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="Všechny jízdní řády"
+            android:textColor="#237BFF"
+            android:textSize="16sp"
+            android:textStyle="bold" /> <!-- Zarovnání na levý okraj -->
+
+        <!-- Text "Odkud:" -->
+
+        <!-- Tučný text -->
+
+        <!-- Pole pro zadávání textu s bílou čarou -->
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/odkudLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="60dp"
+            android:text="Odkud:"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/menuIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/baseline_public_globe" />
+
+        <EditText
+            android:id="@+id/fromEditText"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@+id/odkudLabel"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="16dp"
+            android:layout_toStartOf="@id/menuIcon"
+            android:layout_toLeftOf="@id/menuIcon"
+            android:background="@android:color/black"
+            android:hint="Hlavní nádraží"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/fromEditText"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="50dp"
+            android:background="@android:color/white" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <!-- První Button -->
+        <RelativeLayout
+            android:id="@+id/firstButtonLayout"
+            android:layout_width="179dp"
+            android:layout_height="39dp"
+            android:background="@drawable/round_button"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:layout_marginLeft="60dp"
+            android:paddingEnd="16dp">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/baseline_watch_time" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@+id/timeTextView"
+                android:layout_toEndOf="@+id/imageView"
+                android:text="Čas odjezdu:"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:text="21:00"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+        <!-- Druhý Button -->
+        <RelativeLayout
+            android:id="@+id/firstButtonLayout2"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/round_button"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="3dp"
+                android:scaleType="center"
+                android:src="@drawable/baseline_search_24_white" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/Historie_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="60dp"
+        android:text="Historie:"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
