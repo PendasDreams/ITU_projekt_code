@@ -26,28 +26,16 @@ class Home : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_finance, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val buttonHistorie = view.findViewById<RelativeLayout>(R.id.buttonHistorie)
-        buttonHistorie.setOnClickListener {
-            openHistorieFragment()
+        val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)
+        buttonHledat.setOnClickListener {
+            openSpojeniFragment()
         }
-
-        val buttonPrehledVydaju = view.findViewById<RelativeLayout>(R.id.buttonPrehledVydaju)
-        buttonPrehledVydaju.setOnClickListener {
-            openPrehledVydajuFragment()
-        }
-
-        val buttonAddEntry = view.findViewById<ImageView>(R.id.addNewEntry)
-        buttonAddEntry.setOnClickListener {
-            openAddCreditFragment()
-        }
-
-
         return view
     }
 
-    fun openHistorieFragment() {
+    fun openSpojeniFragment() {
         val spojeniFragment = Spojeni.newInstance("param1", "param2")
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

@@ -5,118 +5,230 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#000000"
+    android:background="@color/backgroundBlue"
     tools:context=".Finance">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar4"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <!-- Název lišty "Historie" v bílém textu -->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Spojení"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/odkudLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="60dp"
+            android:text="Odkud:"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/menuIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/baseline_public_globe" />
+
+        <EditText
+            android:id="@+id/fromEditText"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@+id/odkudLabel"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="16dp"
+            android:layout_toStartOf="@id/menuIcon"
+            android:layout_toLeftOf="@id/menuIcon"
+            android:background="@color/backgroundBlue"
+            android:hint="Hlavní nádraží"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/fromEditText"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="50dp"
+            android:background="@android:color/white" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/kamLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="60dp"
+            android:text="Kam:"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/menuIcon2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/baseline_public_globe" />
+
+        <EditText
+            android:id="@+id/toEditText"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@+id/kamLabel"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="16dp"
+            android:layout_toStartOf="@id/menuIcon2"
+            android:layout_toLeftOf="@id/menuIcon2"
+            android:background="@color/backgroundBlue"
+            android:hint="Semilasso"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/toEditText"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="50dp"
+            android:background="@android:color/white" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <!-- První Button -->
+        <RelativeLayout
+            android:id="@+id/firstButtonLayout"
+            android:layout_width="179dp"
+            android:layout_height="39dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/round_button"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/baseline_watch_time" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@+id/timeTextView"
+                android:layout_toEndOf="@+id/imageView"
+                android:text="Čas odjezdu:"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:text="21:00"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+        <!-- Druhý Button -->
+        <RelativeLayout
+            android:id="@+id/buttonHledat"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/round_button"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:onClick="openSpojenifragment"
+            android:paddingStart="12dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="3dp"
+                android:scaleType="center"
+                android:src="@drawable/baseline_search_24_white" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/historie_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="60dp"
+        android:text="Historie:"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary">
-
-            <!-- Set the title "Finance" in white text -->
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Finance"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:layout_gravity="start" />
-
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- Current Credit Display -->
-    <TextView
-        android:id="@+id/currentCredit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Aktuální kredit\n375.5 CZK"
-        android:textSize="34sp"
-        android:textColor="#ffffff"
-        android:gravity="center"
-        android:paddingTop="24dp"
-        android:paddingBottom="24dp"/>
-
-    <!-- Add New Entry Button -->
-    <ImageView
-        android:id="@+id/addNewEntry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"/>
-
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <!-- Tlačítka Historie a Přehled výdajů jsou nyní pod AppBarLayoutem -->
-    <RelativeLayout
-        android:id="@+id/buttonHistorie"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:onClick="openHistorieFragment"
-        android:background="?android:attr/selectableItemBackground">
-
-        <ImageView
-            android:id="@+id/iconHistorie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
-            android:layout_marginEnd="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/iconHistorie"
-            android:text="Historie"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:layout_marginStart="16dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/buttonPrehledVydaju"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:onClick="openPrehledVydajuFragment"
-        android:background="?android:attr/selectableItemBackground">
-
-        <ImageView
-            android:id="@+id/iconPrehledVydaju"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_menu_24"
-            android:layout_marginEnd="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/iconPrehledVydaju"
-            android:text="Přehled výdajů"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:layout_marginStart="16dp" />
-    </RelativeLayout>
-
-    <!-- Add the rest of your content here -->
 
 </LinearLayout>
