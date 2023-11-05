@@ -14,6 +14,10 @@ val COL_MISTO_OD = "MistoOd"
 val COL_MISTO_DO = "MistoDo"
 val COL_CENA = "Cena"
 
+val TABLE_CREDITS = "Credits"
+val COL_CREDIT_AMOUNT = "CreditAmount"
+val COL_ID = "ID"
+
 class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
         val createTable =
@@ -24,16 +28,61 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_MISTO_DO VARCHAR(255)," +
                     "$COL_CENA DECIMAL(10,2))"
         db?.execSQL(createTable)
+
+        val createCreditsTable =
+            "CREATE TABLE $TABLE_CREDITS (" +
+                    "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," + // Added a primary key for the table
+                    "$COL_CREDIT_AMOUNT DECIMAL(10,2))"
+        db?.execSQL(createCreditsTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_CREDITS")
         onCreate(db)
 
         // Zde můžete přidat kód pro vložení dat do nově vytvořené tabulky.
         if (newVersion > oldVersion) {
             insertInitialData(db)
         }
+    }
+
+    // Insert a new credit amount
+    fun insertCredit(creditAmount: Double): Long {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(COL_CREDIT_AMOUNT, creditAmount)
+        }
+        val id = db.insert(TABLE_CREDITS, null, contentValues)
+        db.close()
+        return id
+    }
+
+    // Update the credit amount
+    fun updateCredit(creditAmount: Double): Int {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(COL_CREDIT_AMOUNT, creditAmount)
+        }
+        // Assuming you want to update the credit amount in the first row (ID = 1)
+        val success = db.update(TABLE_CREDITS, contentValues, "$COL_ID = ?", arrayOf("1"))
+        db.close()
+        return success
+    }
+
+    // Get the total credit amount
+    fun getTotalCredit(): Double {
+        val db = this.readableDatabase
+        val cursor = db.query(TABLE_CREDITS, arrayOf(COL_CREDIT_AMOUNT), null, null, null, null, null)
+        var totalCredit = 0.0
+        if (cursor.moveToFirst()) {
+            do {
+                totalCredit += cursor.getDouble(cursor.getColumnIndex(COL_CREDIT_AMOUNT))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return totalCredit
     }
 
     private fun insertInitialData(db: SQLiteDatabase?) {

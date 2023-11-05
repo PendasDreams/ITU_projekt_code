@@ -38,7 +38,7 @@
             android:id="@+id/currentCredit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Aktuální kredit\n375.5 CZK"
+            android:text="Aktuální kredit\n0.0 CZK"
             android:textSize="34sp"
             android:textColor="#ffffff"
             android:gravity="center"

@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.ImageView
+import android.widget.TextView
+import com.example.bottomnavyt.CreditUpdateListener
 import com.example.bottomnavyt.History
 
 
-class Finance : Fragment() {
+class Finance : Fragment(), CreditUpdateListener {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -46,6 +48,11 @@ class Finance : Fragment() {
 
         return view
     }
+    override fun onCreditUpdated(newCredit: Double) {
+        // Update the TextView with ID currentCredit
+        val currentCreditTextView = view?.findViewById<TextView>(R.id.currentCredit)
+        currentCreditTextView?.text = "Aktuální kredit\n${newCredit} CZK"
+    }
 
     fun openHistorieFragment() {
         val historieFragment = History.newInstance("param1", "param2")
@@ -66,7 +73,8 @@ class Finance : Fragment() {
     }
 
     private fun openAddCreditFragment() {
-        val addCreditFragment = AddCredit.newInstance() // Replace with the actual new fragment class
+        val addCreditFragment = AddCredit.newInstance()
+        addCreditFragment.updateCreditUpdateListener(this) // Set the listener
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_layout, addCreditFragment) // Use your container id
         transaction.addToBackStack(null)
