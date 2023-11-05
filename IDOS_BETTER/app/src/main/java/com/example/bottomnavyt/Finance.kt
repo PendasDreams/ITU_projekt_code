@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.ImageView
 import android.widget.TextView
+import DataBaseHandler
 import com.example.bottomnavyt.CreditUpdateListener
 import com.example.bottomnavyt.History
 
@@ -15,6 +16,8 @@ import com.example.bottomnavyt.History
 class Finance : Fragment(), CreditUpdateListener {
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var databaseHandler: DataBaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +27,20 @@ class Finance : Fragment(), CreditUpdateListener {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (::databaseHandler.isInitialized) {
+            val latestCredit = databaseHandler.getTotalCredit()
+            onCreditUpdated(latestCredit)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        databaseHandler = DataBaseHandler(requireContext())
+
         val view = inflater.inflate(R.layout.fragment_finance, container, false)
 
         val buttonHistorie = view.findViewById<RelativeLayout>(R.id.buttonHistorie)
@@ -45,6 +58,8 @@ class Finance : Fragment(), CreditUpdateListener {
             openAddCreditFragment()
         }
 
+        val latestCredit = databaseHandler.getTotalCredit()
+        onCreditUpdated(latestCredit)
 
         return view
     }

@@ -1,10 +1,12 @@
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.bottomnavyt.History_obj
 
-
+const val TAG = "DataBaseHandler"
 
 val DATABASE_NAME = "MyDB"
 val TABLE_NAME = "History"
@@ -34,6 +36,10 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," + // Added a primary key for the table
                     "$COL_CREDIT_AMOUNT DECIMAL(10,2))"
         db?.execSQL(createCreditsTable)
+
+        val initialValues = ContentValues()
+        initialValues.put(COL_CREDIT_AMOUNT, 0.0)
+        db?.insert(TABLE_CREDITS, null, initialValues)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -54,6 +60,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             put(COL_CREDIT_AMOUNT, creditAmount)
         }
         val id = db.insert(TABLE_CREDITS, null, contentValues)
+        Log.d(TAG, "Inserted new credit with ID: $id and amount: $creditAmount")
         db.close()
         return id
     }
@@ -64,13 +71,18 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val contentValues = ContentValues().apply {
             put(COL_CREDIT_AMOUNT, creditAmount)
         }
-        // Assuming you want to update the credit amount in the first row (ID = 1)
         val success = db.update(TABLE_CREDITS, contentValues, "$COL_ID = ?", arrayOf("1"))
+        if (success == 1) {
+            Log.d(TAG, "Successfully updated credit with new amount: $creditAmount")
+        } else {
+            Log.e(TAG, "Failed to update credit. No rows affected.")
+        }
         db.close()
         return success
     }
 
     // Get the total credit amount
+    @SuppressLint("Range")
     fun getTotalCredit(): Double {
         val db = this.readableDatabase
         val cursor = db.query(TABLE_CREDITS, arrayOf(COL_CREDIT_AMOUNT), null, null, null, null, null)
@@ -82,6 +94,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         }
         cursor.close()
         db.close()
+        Log.d(TAG, "Fetched total credit: $totalCredit")
         return totalCredit
     }
 
