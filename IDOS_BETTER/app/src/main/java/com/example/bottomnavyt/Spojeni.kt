@@ -43,10 +43,8 @@ class Spojeni : Fragment() {
         // Initialize dbHelper
         dbHelper = DataBaseHandler(requireContext())
 
-        // Insert data into the Spojeni table
         dbHelper.insertSpojeni("Praha", "Brno")
 
-        // Get and display data from the Spojeni table using the new function
         displaySpojeniData(view)
 
         return view

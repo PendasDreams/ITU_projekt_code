@@ -55,9 +55,7 @@ class AddCredit : Fragment() {
                 val resultId = databaseHandler.insertCredit(creditAmount)
 
                 if (resultId > 0) {
-                    // Notify the Finance fragment that the credit was updated
-                    // Here you might want to pass the total credit after insertion,
-                    // but for simplicity, we're just passing the inserted amount.
+
                     creditUpdateListener?.onCreditUpdated(creditAmount)
 
                     // Clear the input field after inserting the credit

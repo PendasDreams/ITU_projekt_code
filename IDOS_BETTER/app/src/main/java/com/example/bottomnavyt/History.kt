@@ -59,7 +59,6 @@ class History : Fragment() {
         textViewResultRight = view.findViewById(R.id.textViewResultRight)
         resultLayout = view.findViewById(R.id.resultLayout)
 
-        // Set click listener for the "Přidat" button
         buttonPridat.setOnClickListener {
             try {
                 val data = getFormData()
@@ -91,9 +90,6 @@ class History : Fragment() {
                 textViewResultLeft.text = newTextLeft
                 textViewResultRight.text = newTextRight
 
-                // Zde můžete vypsat zprávu o úspěšném vložení dat s ID, pokud je to potřeba
-                //val message = "Data byla úspěšně vložena s ID: $insertedId"
-                //textViewResultLeft.text = message
 
             } catch (e: Exception) {
                 val errorMessage = "Chyba při vkládání dat: ${e.message}"

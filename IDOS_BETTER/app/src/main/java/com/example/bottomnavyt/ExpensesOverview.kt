@@ -29,7 +29,7 @@ class ExpensesOverview : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Initialize your chart here
-        lineChart = view.findViewById(R.id.chart) // Make sure you have a LineChart with id 'chart' in your fragment_expensesoverview.xml
+        lineChart = view.findViewById(R.id.chart)
 
         setupLineChart()
     }
