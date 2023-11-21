@@ -36,14 +36,26 @@
         android:padding="16dp"
         tools:context=".SpojeniFragment">
 
-        <TextView
-            android:id="@+id/textView"
-            android:background="@color/white"
+        <!-- Add the TextView for displaying time and date here -->
+
+
+        <!-- The rest of your layout content -->
+
+
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#000000" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <!-- The rest of your layout content -->
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

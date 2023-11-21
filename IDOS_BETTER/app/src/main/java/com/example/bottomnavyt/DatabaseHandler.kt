@@ -26,6 +26,15 @@ val TABLE_SPOJENI = "Spojeni"
 val COL_ODKUD = "Odkud"
 val COL_KAM = "Kam"
 
+
+data class SpojeniData(
+    val odkud: String,
+    val kam: String,
+    val casOd: String,
+    val casDo: String,
+    val cena: Double
+)
+
 class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
         val createTable =
@@ -41,7 +50,10 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             "CREATE TABLE $TABLE_SPOJENI (" +
                     "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "$COL_ODKUD VARCHAR(255)," +
-                    "$COL_KAM VARCHAR(255))"
+                    "$COL_KAM VARCHAR(255)," +
+                    "$COL_CAS_OD DATETIME," +
+                    "$COL_CAS_DO DATETIME," +
+                    "$COL_CENA DECIMAL(10,2))"
         db?.execSQL(createSpojeniTable)
 
         val createCreditsTable =
@@ -53,6 +65,30 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val initialValues = ContentValues()
         initialValues.put(COL_CREDIT_AMOUNT, 0.0)
         db?.insert(TABLE_CREDITS, null, initialValues)
+    }
+
+    fun insertInitialSpojeniData() {
+        val db = this.writableDatabase
+
+        val spojeniData = arrayOf(
+            SpojeniData("Praha", "Brno", "2023-11-21 10:00", "2023-11-21 12:00", 250.0),
+            SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15", 180.0),
+            SpojeniData("Plzeň", "České Budějovice", "2023-11-23 15:45", "2023-11-23 18:30", 300.00)
+            // Přidávejte další počáteční data podle potřeby
+        )
+
+        for (data in spojeniData) {
+            val contentValues = ContentValues().apply {
+                put(COL_ODKUD, data.odkud)
+                put(COL_KAM, data.kam)
+                put(COL_CAS_OD, data.casOd)
+                put(COL_CAS_DO, data.casDo)
+                put(COL_CENA, data.cena)
+            }
+            db.insert(TABLE_SPOJENI, null, contentValues)
+        }
+
+        db.close()
     }
 
     fun insertSpojeni(odkud: String, kam: String): Long {
@@ -92,8 +128,15 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return odkudValues
     }
 
+    fun deleteAllSpojeni() {
+        val db = this.writableDatabase
+        db.delete(TABLE_SPOJENI, null, null)
+        db.close()
+    }
+
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_SPOJENI")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_CREDITS")
         onCreate(db)
 
