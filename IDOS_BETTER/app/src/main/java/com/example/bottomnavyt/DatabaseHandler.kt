@@ -26,6 +26,9 @@ val TABLE_SPOJENI = "Spojeni"
 val COL_ODKUD = "Odkud"
 val COL_KAM = "Kam"
 
+val TABLE_KOUPENA_JIZDENKA = "KoupeneSpojeni"
+val COL_SPOJENI_ID = "Koupene_spojeni_ID"
+
 
 data class SpojeniData(
     val odkud: String,
@@ -37,8 +40,13 @@ data class SpojeniData(
 
 class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
+
+        Log.d("Database", "Creating database")
+
+
+
         val createTable =
-            "CREATE TABLE $TABLE_NAME (" +
+            "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
                     "$COL_CAS_OD DATETIME," +
                     "$COL_CAS_DO DATETIME," +
                     "$COL_MISTO_OD VARCHAR(255)," +
@@ -46,8 +54,12 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_CENA DECIMAL(10,2))"
         db?.execSQL(createTable)
 
+        Log.d("Database", "Table created")
+
+
+
         val createSpojeniTable =
-            "CREATE TABLE $TABLE_SPOJENI (" +
+            "CREATE TABLE IF NOT EXISTS $TABLE_SPOJENI (" +
                     "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "$COL_ODKUD VARCHAR(255)," +
                     "$COL_KAM VARCHAR(255)," +
@@ -56,23 +68,89 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_CENA DECIMAL(10,2))"
         db?.execSQL(createSpojeniTable)
 
+        Log.d("Database", "Table created")
+
+
+        val createKoupenaJizdenkaTable =
+            "CREATE TABLE IF NOT EXISTS $TABLE_KOUPENA_JIZDENKA (" +
+                    "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "$COL_SPOJENI_ID INTEGER," +
+                    "$COL_CAS_OD DATETIME," +
+                    "$COL_CAS_DO DATETIME," +
+                    "$COL_CENA DECIMAL(10,2)," +
+                    "FOREIGN KEY ($COL_SPOJENI_ID) REFERENCES $TABLE_SPOJENI($COL_ID))"
+        db?.execSQL(createKoupenaJizdenkaTable)
+
         val createCreditsTable =
-            "CREATE TABLE $TABLE_CREDITS (" +
+            "CREATE TABLE IF NOT EXISTS $TABLE_CREDITS (" +
                     "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "$COL_CREDIT_AMOUNT DECIMAL(10,2))"
         db?.execSQL(createCreditsTable)
+
+        Log.d("Database", "Table created")
+
 
         val initialValues = ContentValues()
         initialValues.put(COL_CREDIT_AMOUNT, 0.0)
         db?.insert(TABLE_CREDITS, null, initialValues)
     }
 
-    fun insertInitialSpojeniData() {
+    fun deleteAllDataFromKoupenaJizdenka(): Int {
         val db = this.writableDatabase
+        return db.delete(TABLE_KOUPENA_JIZDENKA, null, null)
+    }
+    fun insertKoupenaJizdenka(spojeniId: Long, casOd: String, casDo: String, cena: Double): Long {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(COL_SPOJENI_ID, spojeniId)
+            put(COL_CAS_OD, casOd)
+            put(COL_CAS_DO, casDo)
+            put(COL_CENA, cena)
+        }
+        val id = db.insert(TABLE_KOUPENA_JIZDENKA, null, contentValues)
+        db.close()
+        return id
+    }
+
+    fun getAllKoupenaJizdenka(): Cursor {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_KOUPENA_JIZDENKA"
+        return db.rawQuery(query, null)
+    }
+
+    fun getKoupenaJizdenkaData(): List<SpojeniData> {
+        val purchasedTickets = mutableListOf<SpojeniData>()
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_KOUPENA_JIZDENKA"
+        val cursor = db.rawQuery(query, null)
+
+        while (cursor.moveToNext()) {
+            val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
+            val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
+            val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA))
+
+            val purchasedTicket = SpojeniData("", "", casOd, casDo, cena)
+            purchasedTickets.add(purchasedTicket)
+        }
+
+        cursor.close()
+        db.close()
+
+        return purchasedTickets
+    }
+
+
+
+    fun insertInitialSpojeniData() {
+
+        val db = this.writableDatabase
+        onCreate(db)
 
         val spojeniData = arrayOf(
             SpojeniData("Praha", "Brno", "2023-11-21 10:00", "2023-11-21 12:00", 250.0),
+            SpojeniData("semilasso", "husitska", "2023-11-22 09:30", "2023-11-22 11:15", 180.0),
             SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15", 180.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-11-22 09:30", "2023-11-22 11:15", 180.0),
             SpojeniData("Plzeň", "České Budějovice", "2023-11-23 15:45", "2023-11-23 18:30", 300.00)
             // Přidávejte další počáteční data podle potřeby
         )
@@ -128,6 +206,12 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return odkudValues
     }
 
+    fun getSpojeniByOdkudKam(odkud: String, kam: String): Cursor {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_SPOJENI WHERE $COL_ODKUD = ? AND $COL_KAM = ?"
+        return db.rawQuery(query, arrayOf(odkud, kam))
+    }
+
     fun deleteAllSpojeni() {
         val db = this.writableDatabase
         db.delete(TABLE_SPOJENI, null, null)
@@ -135,6 +219,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_KOUPENA_JIZDENKA")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_SPOJENI")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_CREDITS")
@@ -144,6 +229,16 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         if (newVersion > oldVersion) {
             insertInitialData(db)
         }
+    }
+
+    fun resetDatabase() {
+        val db = writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_KOUPENA_JIZDENKA")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_SPOJENI")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_CREDITS")
+        onCreate(db)
+        db.close()
     }
 
     // Insert a new credit amount

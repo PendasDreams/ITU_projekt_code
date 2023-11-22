@@ -10,20 +10,26 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import android.graphics.Color
 import android.view.Gravity
+import android.widget.Button
+import android.util.Log
+import android.widget.Toast
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
+
+
 
 class Spojeni : Fragment() {
     private lateinit var dbHelper: DataBaseHandler
 
     companion object {
-        fun newInstance(param1: String, param2: String) = Spojeni().apply {
-            arguments = Bundle().apply {
-                putString(ARG_PARAM1, param1)
-                putString(ARG_PARAM2, param2)
-            }
+        fun newInstance(odkud: String, kam: String): Spojeni {
+            val fragment = Spojeni()
+            val args = Bundle()
+            args.putString("odkud", odkud)
+            args.putString("kam", kam)
+            fragment.arguments = args
+            return fragment
         }
     }
 
@@ -38,16 +44,30 @@ class Spojeni : Fragment() {
 
         val linearLayout = view.findViewById<LinearLayout>(R.id.linearLayout)
 
+        // Získání hodnot z arguments
+        val odkud = arguments?.getString("odkud") ?: ""
+        val kam = arguments?.getString("kam") ?: ""
+
         // Display and insert data into LinearLayout
-        displayAndInsertSpojeniData(linearLayout)
+        Log.d("Database", "before")
+
+        displayAndInsertSpojeniData(linearLayout, odkud, kam)
+
+        Log.d("Database", "after")
 
         return view
     }
 
 
-    private fun displayAndInsertSpojeniData(linearLayout: LinearLayout) {
+    private fun displayAndInsertSpojeniData(linearLayout: LinearLayout, odkud: String, kam: String) {
         // Initialize dbHelper
-        dbHelper = DataBaseHandler(requireContext())
+
+        Log.d("SpojeniFragment", "Odkud: $odkud, Kam: $kam")
+
+
+        val dbHelper = DataBaseHandler(requireContext())
+
+        Log.d("Database", "before delete")
 
         // Clear existing data by deleting all entries
         dbHelper.deleteAllSpojeni()
@@ -55,7 +75,7 @@ class Spojeni : Fragment() {
         // Insert initial data
         dbHelper.insertInitialSpojeniData()
 
-        val cursor = dbHelper.getAllSpojeni()
+        val cursor = dbHelper.getSpojeniByOdkudKam(odkud, kam)
 
         while (cursor.moveToNext()) {
             // Přidejte TextView s hodnotou casOd před každým výpisem spojení
@@ -84,9 +104,6 @@ class Spojeni : Fragment() {
             linearLayout.addView(timeDateText)
 
             // Zde můžete načíst data z databáze a vytvořit výpis spojení pro každý řádek
-
-            val odkud = cursor.getString(cursor.getColumnIndex(COL_ODKUD))
-            val kam = cursor.getString(cursor.getColumnIndex(COL_KAM))
             val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
             val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA)).toInt() // Převedení na celé číslo
 
@@ -99,7 +116,6 @@ class Spojeni : Fragment() {
 
         cursor.close()
     }
-
 
     private fun formatDateTimeToTime(dateTime: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
@@ -123,8 +139,12 @@ class Spojeni : Fragment() {
         departureDateTime: String,
         arrivalDateTime: String,
         cena: Int,
-        casOd: String // Add casOd as a parameter
+        casOd: String // Přidejte casOd jako parametr
     ): LinearLayout {
+
+        dbHelper = DataBaseHandler(requireContext())
+
+
         val entryLayout = LinearLayout(requireContext())
         entryLayout.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -132,7 +152,24 @@ class Spojeni : Fragment() {
         )
         entryLayout.orientation = LinearLayout.VERTICAL
 
+        // Text na prvním řádku (Čas od a Kam)
+        val casKamText = TextView(requireContext())
+        casKamText.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        casKamText.text = "$arrivalDateTime  $odkud"
+        casKamText.textSize = 16f
+        casKamText.setTextColor(Color.WHITE)
+        entryLayout.addView(casKamText)
 
+        // Prázdný TextView pro mezeru
+        val spaceText1 = TextView(requireContext())
+        spaceText1.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            16 // Zde můžete nastavit výšku mezery
+        )
+        entryLayout.addView(spaceText1)
 
         // Text na druhém řádku (Čas do a Odkud)
         val casOdkudText = TextView(requireContext())
@@ -140,35 +177,63 @@ class Spojeni : Fragment() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        casOdkudText.text = "Čas do: $arrivalDateTime - Odkud: $odkud"
+        casOdkudText.text = "$departureDateTime  $kam"
         casOdkudText.textSize = 16f
         casOdkudText.setTextColor(Color.WHITE)
         entryLayout.addView(casOdkudText)
 
 
-        // Text na prvním řádku (Čas od a Kam)
-        val casKamText = TextView(requireContext())
-        casKamText.layoutParams = LinearLayout.LayoutParams(
+
+
+
+
+
+        // Cena jako tlačítko
+        val priceButton = Button(requireContext())
+        val layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT
         )
-        casKamText.text = "Čas od: $casOd - Kam: $kam"
-        casKamText.textSize = 16f
-        casKamText.setTextColor(Color.WHITE)
-        entryLayout.addView(casKamText)
+        layoutParams.gravity = Gravity.END or Gravity.CENTER_VERTICAL
+        priceButton.layoutParams = layoutParams
+        priceButton.text = "$cena Kč"
+        priceButton.textSize = 16f
+        priceButton.setTextColor(Color.WHITE)
+        priceButton.setBackgroundResource(R.color.colorPrimary)
+
+        // Přidání akce na kliknutí na tlačítko s cenou
+        priceButton.setOnClickListener {
+            // Zde získáte informace o spojení
+            val spojeni = dbHelper.getSpojeniByOdkudKam(odkud, kam)
+            if (spojeni.moveToFirst()) {
+                val spojeniId = spojeni.getLong(spojeni.getColumnIndex(COL_ID))
+                val casOdSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_CAS_OD))
+                val casDoSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_CAS_DO))
+                val cenaSpojeni = spojeni.getDouble(spojeni.getColumnIndex(COL_CENA))
+
+                // Přidání spojení do koupených jízdenek
+                val jizdenkaId = dbHelper.insertKoupenaJizdenka(spojeniId, casOdSpojeni, casDoSpojeni, cenaSpojeni)
 
 
-        // Price
-        val priceText = TextView(requireContext())
-        priceText.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+                // Zde můžete zobrazit zprávu nebo provést další akce po přidání jízdenky
+                Toast.makeText(requireContext(), "Jízdenka zakoupena s ID: $jizdenkaId", Toast.LENGTH_SHORT).show()
+            }
+
+            spojeni.close()
+        }
+
+        entryLayout.addView(priceButton)
+
+
+        // Prázdný TextView pro mezeru
+        val spaceText2 = TextView(requireContext())
+        spaceText2.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            16 // Zde můžete nastavit výšku mezery
         )
-        priceText.text = "$cena Kč"
-        priceText.textSize = 16f
-        priceText.setTextColor(Color.WHITE)
+        entryLayout.addView(spaceText2)
 
-        entryLayout.addView(priceText)
+
 
         return entryLayout
     }

@@ -56,7 +56,7 @@
             android:src="@drawable/baseline_public_globe" />
 
         <EditText
-            android:id="@+id/fromEditText"
+            android:id="@+id/editTextOdkud"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_below="@+id/odkudLabel"
@@ -67,12 +67,13 @@
             android:background="@color/backgroundBlue"
             android:hint="Hlavní nádraží"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/white"
+            android:inputType="textMultiLine|textCapSentences" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/fromEditText"
+            android:layout_below="@id/editTextOdkud"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="4dp"
             android:layout_marginRight="50dp"
@@ -111,7 +112,7 @@
             android:src="@drawable/baseline_public_globe" />
 
         <EditText
-            android:id="@+id/toEditText"
+            android:id="@+id/editTextKam"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_below="@+id/kamLabel"
@@ -127,7 +128,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/toEditText"
+            android:layout_below="@id/editTextKam"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="4dp"
             android:layout_marginRight="50dp"

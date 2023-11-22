@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.ImageView
 import com.example.bottomnavyt.History
+import android.widget.EditText
+
 
 
 
@@ -31,14 +33,30 @@ class Home : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)
+        val editTextOdkud = view.findViewById<EditText>(R.id.editTextOdkud)
+        val editTextKam = view.findViewById<EditText>(R.id.editTextKam)
+
         buttonHledat.setOnClickListener {
-            openSpojeniFragment()
+            var odkud = editTextOdkud.text.toString()
+            var kam = editTextKam.text.toString()
+
+            // Kontrola prázdných polí a nastavení výchozích hodnot
+            if (odkud.isEmpty()) {
+                odkud = "Hlavní nádraží"
+            }
+
+            if (kam.isEmpty()) {
+                kam = "Semilasso"
+            }
+
+            openSpojeniFragment(odkud, kam)
         }
+
         return view
     }
 
-    fun openSpojeniFragment() {
-        val spojeniFragment = Spojeni.newInstance("semilasso", "husitská")
+    fun openSpojeniFragment(odkud: String, kam: String) {
+        val spojeniFragment = Spojeni.newInstance(odkud, kam)
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, spojeniFragment)
