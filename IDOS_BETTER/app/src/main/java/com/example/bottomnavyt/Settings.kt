@@ -76,8 +76,10 @@ class Settings : Fragment() {
         // Inicializace ListView
         listView = view.findViewById(R.id.listView)
 
+        // Najděte stávající ScrollView pro data
+        val scrollView = view.findViewById<ScrollView>(R.id.scrollView)
 
-        // Vytvoření lineárního rozložení pro zobrazení dat
+        // Vytvořte nový LinearLayout pro zobrazení nových dat
         val linearLayout = LinearLayout(requireContext())
         linearLayout.orientation = LinearLayout.VERTICAL
 
@@ -89,9 +91,12 @@ class Settings : Fragment() {
         // Načtení a zobrazení dat z databáze koupených jízdenek
         displayKoupenaJizdenkaData(linearLayout)
 
-        return linearLayout  // Set linearLayout as the root view of the fragment
-    }
+        // Přidejte nový LinearLayout s daty pod stávající ScrollView
+        val scrollViewLayout = scrollView.getChildAt(0) as LinearLayout
+        scrollViewLayout.addView(linearLayout)
 
+        return view
+    }
 
 
 
