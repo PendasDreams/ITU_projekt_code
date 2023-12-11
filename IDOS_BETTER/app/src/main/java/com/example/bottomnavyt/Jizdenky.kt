@@ -106,15 +106,23 @@ class Jizdenky : Fragment() {
             val kam = data.kam
             val casOd = data.casOd
             val casDo = data.casDo
+            val vehicle = data.vehicle
             val cena = data.cena
 
-            val entryLayout = createEntryLayout(odkud, kam, casOd, casDo, cena)
+            val entryLayout = createEntryLayout(odkud, kam, casOd, casDo, vehicle, cena) // Přidejte typ vozidla
             linearLayout.addView(entryLayout)
         }
 
         Log.d("DIS", "Displayed ${purchasedTickets.size} jizdenky")
     }
-    private fun createEntryLayout(odkud: String, kam: String, casOd: String, casDo: String, cena: Double): LinearLayout {
+    private fun createEntryLayout(
+        odkud: String,
+        kam: String,
+        casOd: String,
+        casDo: String,
+        vehicle: String, // Přidejte typ vozidla
+        cena: Double
+    ): LinearLayout {
         // Create a new LinearLayout for displaying purchased ticket data
         val entryLayout = LinearLayout(requireContext())
         val layoutParams = LinearLayout.LayoutParams(
@@ -129,6 +137,7 @@ class Jizdenky : Fragment() {
         val textViewKam = TextView(requireContext())
         val textViewCasOd = TextView(requireContext())
         val textViewCasDo = TextView(requireContext())
+        val textViewVehicle = TextView(requireContext()) // TextView pro typ vozidla
         val textViewCena = TextView(requireContext())
 
         // Set text and formatting for TextViews
@@ -136,11 +145,13 @@ class Jizdenky : Fragment() {
         val kamText = "Kam: $kam"
         val casOdText = "Čas odjezdu: $casOd"
         val casDoText = "Čas příjezdu: $casDo"
+        val vehicleText = "Typ vozidla: $vehicle" // Zobrazení typu vozidla
         val cenaText = "Cena: $cena"
         textViewOdkud.text = odkudText
         textViewKam.text = kamText
         textViewCasOd.text = casOdText
         textViewCasDo.text = casDoText
+        textViewVehicle.text = vehicleText // Nastavení textu pro typ vozidla
         textViewCena.text = cenaText
 
         // Set text color to white
@@ -148,6 +159,7 @@ class Jizdenky : Fragment() {
         textViewKam.setTextColor(Color.WHITE)
         textViewCasOd.setTextColor(Color.WHITE)
         textViewCasDo.setTextColor(Color.WHITE)
+        textViewVehicle.setTextColor(Color.WHITE) // Nastavení barvy textu pro typ vozidla
         textViewCena.setTextColor(Color.WHITE)
 
         // Add TextViews to the entryLayout
@@ -155,15 +167,8 @@ class Jizdenky : Fragment() {
         entryLayout.addView(textViewKam)
         entryLayout.addView(textViewCasOd)
         entryLayout.addView(textViewCasDo)
+        entryLayout.addView(textViewVehicle) // Přidání TextView pro typ vozidla
         entryLayout.addView(textViewCena)
-
-        // Log the values for debugging
-        Log.d("DIS", "createEntryLayout called with:")
-        Log.d("DIS", "Odkud: $odkud")
-        Log.d("DIS", "Kam: $kam")
-        Log.d("DIS", "Cas Odjezdu: $casOd")
-        Log.d("DIS", "Cas Příjezdu: $casDo")
-        Log.d("DIS", "Cena: $cena")
 
         return entryLayout
     }
