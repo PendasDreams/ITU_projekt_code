@@ -170,7 +170,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             SpojeniData("semilasso", "husitska", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
             SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
             SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 22:30", "2023-12-11 24:00","Tram1", 180.0),
-            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 15:47", "2023-12-11 16:00","Tram1", 180.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 19:47", "2023-12-11 24:00","Tram1", 80.0),
             SpojeniData("Plzeň", "České Budějovice", "2023-11-23 15:45", "2023-11-23 18:30","Tram1", 300.00)
             // Přidávejte další počáteční data podle potřeby
         )

@@ -109,11 +109,13 @@ class Spojeni : Fragment() {
                 val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
                 val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA)).toInt() // Převedení na celé číslo
                 val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
+                val spojeniId = cursor.getLong(cursor.getColumnIndex(COL_ID))
+
 
                 // Zde vytvořte výpis spojení pro každý řádek a přidejte jej do LinearLayout
                 val formattedCasOd = formatDateTimeToTime(casOd)
                 val formattedCasDo = formatDateTimeToTime(casDo)
-                val entryLayout = createEntryLayout(odkud, kam, formattedCasOd, formattedCasDo, cena, casOd, vehicle)
+                val entryLayout = createEntryLayout(odkud, kam, formattedCasOd, formattedCasDo, cena, casOd, vehicle, spojeniId)
                 linearLayout.addView(entryLayout)
             }
         }
@@ -167,7 +169,8 @@ class Spojeni : Fragment() {
         arrivalDateTime: String,
         cena: Int,
         casOd: String,
-        vehicle: String
+        vehicle: String,
+        spojeniId: Long // Přidáme parametr pro ID spojení
     ): LinearLayout {
 
         dbHelper = DataBaseHandler(requireContext())
@@ -246,10 +249,14 @@ class Spojeni : Fragment() {
         priceButton.setTextColor(Color.WHITE)
         priceButton.setBackgroundResource(R.color.colorPrimary)
 
+        // Přiřadíme ID spojení jako značku tlačítka
+        priceButton.tag = spojeniId
+
         // Přidání akce na kliknutí na tlačítko s cenou
         priceButton.setOnClickListener {
-            // Zde získáte informace o spojení
-            val spojeni = dbHelper.getSpojeniByOdkudKam(odkud, kam)
+            // Získání ID spojení z tagu tlačítka
+            val clickedSpojeniId = it.tag as Long
+            val spojeni = dbHelper.getSpojeniById(clickedSpojeniId)
             if (spojeni.moveToFirst()) {
                 val spojeniId = spojeni.getLong(spojeni.getColumnIndex(COL_ID))
                 val odkudSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_ODKUD))
