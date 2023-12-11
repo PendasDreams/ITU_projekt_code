@@ -29,12 +29,15 @@ val COL_KAM = "Kam"
 val TABLE_KOUPENA_JIZDENKA = "KoupeneSpojeni"
 val COL_SPOJENI_ID = "Koupene_spojeni_ID"
 
+val COL_VEHICLE ="vozidlo"
+
 
 data class SpojeniData(
     val odkud: String,
     val kam: String,
     val casOd: String,
     val casDo: String,
+    val vehicle: String,
     val cena: Double
 )
 
@@ -65,6 +68,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_KAM VARCHAR(255)," +
                     "$COL_CAS_OD DATETIME," +
                     "$COL_CAS_DO DATETIME," +
+                    "$COL_VEHICLE VARCHAR(255)," +
                     "$COL_CENA DECIMAL(10,2))"
         db?.execSQL(createSpojeniTable)
 
@@ -79,6 +83,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_KAM VARCHAR(255)," +   // Nový sloupec pro kam
                     "$COL_CAS_OD DATETIME," +
                     "$COL_CAS_DO DATETIME," +
+                    "$COL_VEHICLE VARCHAR(255)," +
                     "$COL_CENA DECIMAL(10,2)," +
                     "FOREIGN KEY ($COL_SPOJENI_ID) REFERENCES $TABLE_SPOJENI($COL_ID))"
         db?.execSQL(createKoupenaJizdenkaTable)
@@ -101,7 +106,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val db = this.writableDatabase
         return db.delete(TABLE_KOUPENA_JIZDENKA, null, null)
     }
-    fun insertKoupenaJizdenka(spojeniId: Long, odkud: String, kam: String, casOd: String, casDo: String, cena: Double): Long {
+    fun insertKoupenaJizdenka(spojeniId: Long, odkud: String, kam: String, casOd: String, casDo: String,vehicle: String, cena: Double): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
             put(COL_SPOJENI_ID, spojeniId)
@@ -109,6 +114,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             put(COL_KAM, kam)
             put(COL_CAS_OD, casOd)
             put(COL_CAS_DO, casDo)
+            put(COL_VEHICLE, vehicle)
             put(COL_CENA, cena)
         }
         val id = db.insert(TABLE_KOUPENA_JIZDENKA, null, contentValues)
@@ -133,9 +139,10 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             val kam = cursor.getString(cursor.getColumnIndex(COL_KAM))
             val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
             val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
+            val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
             val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA))
 
-            val purchasedTicket = SpojeniData(odkud, kam, casOd, casDo, cena)
+            val purchasedTicket = SpojeniData(odkud, kam, casOd, casDo,vehicle, cena)
             purchasedTickets.add(purchasedTicket)
         }
 
@@ -153,11 +160,11 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         onCreate(db)
 
         val spojeniData = arrayOf(
-            SpojeniData("Praha", "Brno", "2023-11-21 10:00", "2023-11-21 12:00", 250.0),
-            SpojeniData("semilasso", "husitska", "2023-11-22 09:30", "2023-11-22 11:15", 180.0),
-            SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15", 180.0),
-            SpojeniData("Hlavní nádraží", "Semilasso", "2023-11-22 09:30", "2023-11-22 11:15", 180.0),
-            SpojeniData("Plzeň", "České Budějovice", "2023-11-23 15:45", "2023-11-23 18:30", 300.00)
+            SpojeniData("Praha", "Brno", "2023-11-21 10:00", "2023-11-21 12:00","Tram1", 250.0),
+            SpojeniData("semilasso", "husitska", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
+            SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
+            SpojeniData("Plzeň", "České Budějovice", "2023-11-23 15:45", "2023-11-23 18:30","Tram1", 300.00)
             // Přidávejte další počáteční data podle potřeby
         )
 
@@ -167,6 +174,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 put(COL_KAM, data.kam)
                 put(COL_CAS_OD, data.casOd)
                 put(COL_CAS_DO, data.casDo)
+                put(COL_VEHICLE, data.vehicle)
                 put(COL_CENA, data.cena)
             }
             db.insert(TABLE_SPOJENI, null, contentValues)

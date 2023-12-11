@@ -107,10 +107,12 @@ class Spojeni : Fragment() {
             val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
             val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA)).toInt() // Převedení na celé číslo
 
+            val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
+
             // Zde vytvořte výpis spojení pro každý řádek a přidejte jej do LinearLayout
             val formattedCasOd = formatDateTimeToTime(casOd)
             val formattedCasDo = formatDateTimeToTime(casDo)
-            val entryLayout = createEntryLayout(odkud, kam, formattedCasOd, formattedCasDo, cena, casOd)
+            val entryLayout = createEntryLayout(odkud, kam, formattedCasOd, formattedCasDo, cena, casOd,vehicle)
             linearLayout.addView(entryLayout)
         }
 
@@ -139,7 +141,8 @@ class Spojeni : Fragment() {
         departureDateTime: String,
         arrivalDateTime: String,
         cena: Int,
-        casOd: String // Přidejte casOd jako parametr
+        casOd: String,
+        vehicle: String
     ): LinearLayout {
 
         dbHelper = DataBaseHandler(requireContext())
@@ -182,7 +185,16 @@ class Spojeni : Fragment() {
         casOdkudText.setTextColor(Color.WHITE)
         entryLayout.addView(casOdkudText)
 
-
+        // Text na třetím řádku (Vozidlo)
+        val vehicleText = TextView(requireContext())
+        vehicleText.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        vehicleText.text = "Vozidlo: $vehicle"
+        vehicleText.textSize = 16f
+        vehicleText.setTextColor(Color.WHITE)
+        entryLayout.addView(vehicleText)
 
 
 
@@ -211,10 +223,11 @@ class Spojeni : Fragment() {
                 val kamSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_KAM))
                 val casOdSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_CAS_OD))
                 val casDoSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_CAS_DO))
+                val vehicleSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_VEHICLE))
                 val cenaSpojeni = spojeni.getDouble(spojeni.getColumnIndex(COL_CENA))
 
                 // Přidání spojení do koupených jízdenek
-                val jizdenkaId = dbHelper.insertKoupenaJizdenka(spojeniId,odkudSpojeni,kamSpojeni, casOdSpojeni, casDoSpojeni, cenaSpojeni)
+                val jizdenkaId = dbHelper.insertKoupenaJizdenka(spojeniId,odkudSpojeni,kamSpojeni, casOdSpojeni, casDoSpojeni,vehicle, cenaSpojeni)
 
 
                 // Zde můžete zobrazit zprávu nebo provést další akce po přidání jízdenky
