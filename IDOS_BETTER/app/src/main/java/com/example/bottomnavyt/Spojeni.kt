@@ -178,7 +178,7 @@ class Spojeni : Fragment() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        casKamText.text = "$arrivalDateTime  $odkud"
+        casKamText.text = "$departureDateTime $odkud"
         casKamText.textSize = 16f
         casKamText.setTextColor(Color.WHITE)
         entryLayout.addView(casKamText)
@@ -197,7 +197,7 @@ class Spojeni : Fragment() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        casOdkudText.text = "$departureDateTime  $kam"
+        casOdkudText.text = "$arrivalDateTime $kam"
         casOdkudText.textSize = 16f
         casOdkudText.setTextColor(Color.WHITE)
         entryLayout.addView(casOdkudText)
