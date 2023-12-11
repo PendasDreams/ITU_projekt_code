@@ -58,7 +58,7 @@ class Home : Fragment() {
             }
 
             if (casOdjezdu.isEmpty()) {
-                casOdjezdu = "21:00"
+                casOdjezdu = "15:00"
             }
 
             openSpojeniFragment(odkud, kam, casOdjezdu)

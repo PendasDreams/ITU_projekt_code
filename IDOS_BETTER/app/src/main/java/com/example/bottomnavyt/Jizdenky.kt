@@ -96,6 +96,9 @@ class Jizdenky : Fragment() {
         val dbHelper = DataBaseHandler(requireContext())
         val purchasedTickets = dbHelper.getKoupenaJizdenkaData()
 
+        // Aktuální reálný čas
+        val currentTimeMillis = System.currentTimeMillis()
+
         for (data in purchasedTickets) {
             val odkud = data.odkud
             val kam = data.kam
@@ -103,6 +106,15 @@ class Jizdenky : Fragment() {
             val casDo = data.casDo
             val vehicle = data.vehicle
             val cena = data.cena
+
+            // Převedení času odjezdu z formátu "yyyy-MM-dd HH:mm" na časový milisekundy
+            val departureTimeMillis = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).parse(casOd)?.time ?: 0
+
+            // Pokud je čas odjezdu menší než aktuální reálný čas, odstraňte jízdenku
+            if (departureTimeMillis < currentTimeMillis) {
+                dbHelper.deleteKoupenaJizdenkaByCasOd(casOd)
+                continue // Přeskočit tuto jízdenku
+            }
 
             val entryLayout = createEntryLayout(odkud, kam, casOd, casDo, vehicle, cena) // Přidejte typ vozidla
             linearLayout.addView(entryLayout)
@@ -370,6 +382,10 @@ class Jizdenky : Fragment() {
         return entryLayout
     }
 
+
+
+
+
     private fun formatDateTimeToTime(dateTime: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -395,6 +411,9 @@ class Jizdenky : Fragment() {
         val date = inputFormat.parse(dateTime)
         return outputFormat.format(date)
     }
+
+
+
 
 
 }

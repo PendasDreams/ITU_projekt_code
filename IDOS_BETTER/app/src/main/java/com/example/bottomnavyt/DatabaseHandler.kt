@@ -152,6 +152,12 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return purchasedTickets
     }
 
+    fun deleteKoupenaJizdenkaByCasOd(casOd: String): Int {
+        val db = this.writableDatabase
+        return db.delete(TABLE_KOUPENA_JIZDENKA, "$COL_CAS_OD <= ?", arrayOf(casOd))
+    }
+
+
 
 
     fun insertInitialSpojeniData() {
@@ -163,7 +169,8 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             SpojeniData("Praha", "Brno", "2023-12-11 10:00", "2023-11-21 12:00","Tram1", 250.0),
             SpojeniData("semilasso", "husitska", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
             SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
-            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 15:30", "2023-12-11 17:30","Tram1", 180.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 22:30", "2023-12-11 24:00","Tram1", 180.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 15:47", "2023-12-11 16:00","Tram1", 180.0),
             SpojeniData("Plzeň", "České Budějovice", "2023-11-23 15:45", "2023-11-23 18:30","Tram1", 300.00)
             // Přidávejte další počáteční data podle potřeby
         )
@@ -198,6 +205,12 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_SPOJENI"
         return db.rawQuery(query, null)
+    }
+
+    fun getSpojeniById(spojeniId: Long): Cursor {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_SPOJENI WHERE $COL_ID = ?"
+        return db.rawQuery(query, arrayOf(spojeniId.toString()))
     }
 
     fun getAllOdkudValues(): List<String> {
@@ -327,4 +340,6 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
         return insertedId
     }
+
+
 }
