@@ -258,6 +258,26 @@ class Jizdenky : Fragment() {
         entryLayout.addView(firstRowLayout)
         entryLayout.addView(secondRowLayout)
 
+
+
+
+        // Create a blue rectangle (modrý obdélník) containing remaining time
+        val blueRectangle2 = LinearLayout(requireContext())
+        val blueRectangleLayoutParams2 = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            5  // Zde můžete nastavit požadovanou výšku obdélníku
+        )
+        blueRectangle2.setBackgroundResource(R.color.colorSecondary)
+        blueRectangle2.layoutParams = blueRectangleLayoutParams2
+        blueRectangle2.orientation = LinearLayout.HORIZONTAL
+        blueRectangle2.gravity = Gravity.CENTER_VERTICAL  // Zarovnání na střed vertikálně
+
+
+        // Add the blue rectangle to the entryLayout
+        entryLayout.addView(blueRectangle2)
+
+
+
         // Create TextView for displaying cena as an integer
         val textViewCena = TextView(requireContext())
         val cenaInt = cena.toInt()
@@ -268,6 +288,82 @@ class Jizdenky : Fragment() {
 
         // Add TextView for cena to the entryLayout
         entryLayout.addView(textViewCena)
+
+
+        // Create a blue rectangle (modrý obdélník) containing transaction code, date, tariff, and price
+        val blueRectangle3 = LinearLayout(requireContext())
+        val blueRectangleLayoutParams3 = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        blueRectangle3.setBackgroundResource(R.color.black)
+        blueRectangle3.layoutParams = blueRectangleLayoutParams3
+        blueRectangle3.orientation = LinearLayout.VERTICAL
+
+// Create TextView for "Kód transakce"
+        val textViewTransactionCode = TextView(requireContext())
+        val transactionCode = "Kód transakce    XXXX"
+        textViewTransactionCode.text = transactionCode
+        textViewTransactionCode.textSize = 16f
+        textViewTransactionCode.setTextColor(Color.WHITE)
+
+// Create TextView for "Datum" (použije nový formát datumu)
+        val textViewDate = TextView(requireContext())
+        val dateText = "Datum                 ${formatDateTimeToDate(casOd)}"
+        textViewDate.text = dateText
+        textViewDate.textSize = 16f
+        textViewDate.setTextColor(Color.WHITE)
+
+// Create TextView for "Tarif"
+        val textViewTarif = TextView(requireContext())
+        val tarifText = "Tarif                     Základní"
+        textViewTarif.text = tarifText
+        textViewTarif.textSize = 16f
+        textViewTarif.setTextColor(Color.WHITE)
+
+// Create TextView for "Cena"
+        val textViewPrice = TextView(requireContext())
+        val priceText = "Cena                    $cena Kč"
+        textViewPrice.text = priceText
+        textViewPrice.textSize = 16f
+        textViewPrice.setTextColor(Color.WHITE)
+
+// Add TextViews for transaction code, date, tariff, and price to the blue rectangle
+        blueRectangle3.addView(textViewTransactionCode)
+        blueRectangle3.addView(textViewDate)
+        blueRectangle3.addView(textViewTarif)
+        blueRectangle3.addView(textViewPrice)
+
+// Add the blue rectangle to the entryLayout
+        entryLayout.addView(blueRectangle3)
+
+
+// Create a blue rectangle (modrý obdélník) with a height of 5
+        val blueRectangle4 = LinearLayout(requireContext())
+        val blueRectangleLayoutParams4 = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            5  // Zde můžete nastavit požadovanou výšku obdélníku (5 px)
+        )
+        blueRectangle4.setBackgroundResource(R.color.colorSecondary)
+        blueRectangle4.layoutParams = blueRectangleLayoutParams4
+        blueRectangle4.orientation = LinearLayout.HORIZONTAL
+        blueRectangle4.gravity = Gravity.CENTER_VERTICAL  // Zarovnání na střed vertikálně
+
+// Add the fourth blue rectangle to the entryLayout
+        entryLayout.addView(blueRectangle4)
+
+// Přidejte mezeru pod blueRectangle4
+        val spaceBelowBlueRectangle4 = TextView(requireContext())
+        val spaceBelowBlueRectangle4LayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            16 // Zde můžete nastavit výšku mezery pod blueRectangle4
+        )
+        spaceBelowBlueRectangle4.layoutParams = spaceBelowBlueRectangle4LayoutParams
+        entryLayout.addView(spaceBelowBlueRectangle4)
+
+
+
+
 
 
 
@@ -292,5 +388,13 @@ class Jizdenky : Fragment() {
 
         return String.format("%02d:%02d", hours, minutes)
     }
+
+    private fun formatDateTimeToDate(dateTime: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val date = inputFormat.parse(dateTime)
+        return outputFormat.format(date)
+    }
+
 
 }
