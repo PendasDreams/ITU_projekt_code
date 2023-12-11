@@ -95,8 +95,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#FFFFFF"
+                android:background="#000000"
+                android:textColor="#ffffff"
                 android:layout_margin="16dp">
+
 
                 <!-- ListView pro nová data -->
                 <ListView
@@ -106,6 +108,8 @@
                     android:divider="@null"
                     android:dividerHeight="0dp"
                     android:scrollbars="vertical"
+                    android:background="#000000"
+                    android:textColor="#ffffff"
                     android:layout_gravity="center" />
 
                 <!-- Přidejte sem jakékoliv další UI komponenty, které potřebujete pro nová data -->

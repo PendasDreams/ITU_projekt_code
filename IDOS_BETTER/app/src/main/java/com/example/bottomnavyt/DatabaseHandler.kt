@@ -75,6 +75,8 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             "CREATE TABLE IF NOT EXISTS $TABLE_KOUPENA_JIZDENKA (" +
                     "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "$COL_SPOJENI_ID INTEGER," +
+                    "$COL_ODKUD VARCHAR(255)," + // Nový sloupec pro odkud
+                    "$COL_KAM VARCHAR(255)," +   // Nový sloupec pro kam
                     "$COL_CAS_OD DATETIME," +
                     "$COL_CAS_DO DATETIME," +
                     "$COL_CENA DECIMAL(10,2)," +
@@ -99,10 +101,12 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val db = this.writableDatabase
         return db.delete(TABLE_KOUPENA_JIZDENKA, null, null)
     }
-    fun insertKoupenaJizdenka(spojeniId: Long, casOd: String, casDo: String, cena: Double): Long {
+    fun insertKoupenaJizdenka(spojeniId: Long, odkud: String, kam: String, casOd: String, casDo: String, cena: Double): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
             put(COL_SPOJENI_ID, spojeniId)
+            put(COL_ODKUD, odkud)
+            put(COL_KAM, kam)
             put(COL_CAS_OD, casOd)
             put(COL_CAS_DO, casDo)
             put(COL_CENA, cena)
@@ -125,11 +129,13 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val cursor = db.rawQuery(query, null)
 
         while (cursor.moveToNext()) {
+            val odkud = cursor.getString(cursor.getColumnIndex(COL_ODKUD))
+            val kam = cursor.getString(cursor.getColumnIndex(COL_KAM))
             val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
             val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
             val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA))
 
-            val purchasedTicket = SpojeniData("", "", casOd, casDo, cena)
+            val purchasedTicket = SpojeniData(odkud, kam, casOd, casDo, cena)
             purchasedTickets.add(purchasedTicket)
         }
 

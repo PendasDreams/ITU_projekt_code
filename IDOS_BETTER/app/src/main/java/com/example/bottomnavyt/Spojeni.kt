@@ -207,12 +207,14 @@ class Spojeni : Fragment() {
             val spojeni = dbHelper.getSpojeniByOdkudKam(odkud, kam)
             if (spojeni.moveToFirst()) {
                 val spojeniId = spojeni.getLong(spojeni.getColumnIndex(COL_ID))
+                val odkudSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_ODKUD))
+                val kamSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_KAM))
                 val casOdSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_CAS_OD))
                 val casDoSpojeni = spojeni.getString(spojeni.getColumnIndex(COL_CAS_DO))
                 val cenaSpojeni = spojeni.getDouble(spojeni.getColumnIndex(COL_CENA))
 
                 // Přidání spojení do koupených jízdenek
-                val jizdenkaId = dbHelper.insertKoupenaJizdenka(spojeniId, casOdSpojeni, casDoSpojeni, cenaSpojeni)
+                val jizdenkaId = dbHelper.insertKoupenaJizdenka(spojeniId,odkudSpojeni,kamSpojeni, casOdSpojeni, casDoSpojeni, cenaSpojeni)
 
 
                 // Zde můžete zobrazit zprávu nebo provést další akce po přidání jízdenky

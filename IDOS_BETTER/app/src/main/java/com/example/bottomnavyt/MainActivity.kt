@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.home -> replaceFragment(Home())
                 R.id.odjezdy -> replaceFragment(Profile())
-                R.id.jizdenky -> replaceFragment(Settings())
+                R.id.jizdenky -> replaceFragment(Jizdenky())
                 R.id.Vice -> replaceFragment(More())
                 R.id.Finance -> replaceFragment(Finance())
 
