@@ -155,7 +155,24 @@ class Spojeni : Fragment() {
         )
         entryLayout.orientation = LinearLayout.VERTICAL
 
-        // Text na prvním řádku (Čas od a Kam)
+
+
+        // Text na prvním řádku (Vozidlo)
+        val vehicleText = TextView(requireContext())
+        val vehicleLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        vehicleLayoutParams.topMargin = 20 // Mezera nad textem
+        vehicleLayoutParams.bottomMargin = 20 // Mezera pod textem
+        vehicleText.layoutParams = vehicleLayoutParams
+        vehicleText.text = "$vehicle"
+        vehicleText.textSize = 19f
+        vehicleText.setTextColor(Color.RED)
+        entryLayout.addView(vehicleText)
+
+
+        // Text na druhém  řádku (Čas od a Kam)
         val casKamText = TextView(requireContext())
         casKamText.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -174,7 +191,7 @@ class Spojeni : Fragment() {
         )
         entryLayout.addView(spaceText1)
 
-        // Text na druhém řádku (Čas do a Odkud)
+        // Text na třetím řádku (Čas do a Odkud)
         val casOdkudText = TextView(requireContext())
         casOdkudText.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -185,16 +202,7 @@ class Spojeni : Fragment() {
         casOdkudText.setTextColor(Color.WHITE)
         entryLayout.addView(casOdkudText)
 
-        // Text na třetím řádku (Vozidlo)
-        val vehicleText = TextView(requireContext())
-        vehicleText.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        vehicleText.text = "Vozidlo: $vehicle"
-        vehicleText.textSize = 16f
-        vehicleText.setTextColor(Color.WHITE)
-        entryLayout.addView(vehicleText)
+
 
 
 
