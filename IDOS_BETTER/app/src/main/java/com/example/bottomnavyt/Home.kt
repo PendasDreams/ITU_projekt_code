@@ -9,9 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.ImageView
 import com.example.bottomnavyt.History
 import android.widget.EditText
-
-
-
+import android.widget.Toast
 
 
 class Home : Fragment() {
@@ -35,12 +33,22 @@ class Home : Fragment() {
         val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)
         val editTextOdkud = view.findViewById<EditText>(R.id.editTextOdkud)
         val editTextKam = view.findViewById<EditText>(R.id.editTextKam)
+        val editTextCasOdjezdu = view.findViewById<EditText>(R.id.timeTextView) // Přidáno pro získání času odjezdu
 
         buttonHledat.setOnClickListener {
             var odkud = editTextOdkud.text.toString()
             var kam = editTextKam.text.toString()
+            var casOdjezdu = editTextCasOdjezdu.text.toString()
 
-            // Kontrola prázdných polí a nastavení výchozích hodnot
+            if (!isCasOdjezduValid(casOdjezdu)) {
+                // Čas odjezdu nebyl zadán ve správném formátu
+                // Můžete zobrazit upozornění nebo provést jinou akci
+                // Například zobrazení Toast zprávy
+                Toast.makeText(requireContext(), "Neplatný formát času odjezdu (očekává se HH:mm)", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Pokračujte pouze pokud je čas odjezdu ve správném formátu
             if (odkud.isEmpty()) {
                 odkud = "Hlavní nádraží"
             }
@@ -49,20 +57,33 @@ class Home : Fragment() {
                 kam = "Semilasso"
             }
 
-            openSpojeniFragment(odkud, kam)
+            if (casOdjezdu.isEmpty()) {
+                casOdjezdu = "21:00"
+            }
+
+            openSpojeniFragment(odkud, kam, casOdjezdu)
         }
+
+
 
         return view
     }
 
-    fun openSpojeniFragment(odkud: String, kam: String) {
-        val spojeniFragment = Spojeni.newInstance(odkud, kam)
+    fun openSpojeniFragment(odkud: String, kam: String, casOdjezdu: String) {
+        val spojeniFragment = Spojeni.newInstance(odkud, kam, casOdjezdu)
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, spojeniFragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
+    private fun isCasOdjezduValid(casOdjezdu: String): Boolean {
+        val timeRegex = Regex("^([01]?[0-9]|2[0-3]):[0-5][0-9]\$")
+        return timeRegex.matches(casOdjezdu)
+    }
+
+
 
     fun openPrehledVydajuFragment() {
         val expensesOverviewFragment = ExpensesOverview.newInstance("param1", "param2")

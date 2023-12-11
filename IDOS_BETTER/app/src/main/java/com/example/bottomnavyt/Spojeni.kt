@@ -23,11 +23,12 @@ class Spojeni : Fragment() {
     private lateinit var dbHelper: DataBaseHandler
 
     companion object {
-        fun newInstance(odkud: String, kam: String): Spojeni {
+        fun newInstance(odkud: String, kam: String, casOdjezdu: String): Spojeni {
             val fragment = Spojeni()
             val args = Bundle()
             args.putString("odkud", odkud)
             args.putString("kam", kam)
+            args.putString("casOdjezdu", casOdjezdu) // Přidejte casOdjezdu do arguments
             fragment.arguments = args
             return fragment
         }
@@ -47,11 +48,12 @@ class Spojeni : Fragment() {
         // Získání hodnot z arguments
         val odkud = arguments?.getString("odkud") ?: ""
         val kam = arguments?.getString("kam") ?: ""
+        val casOdjezdu = arguments?.getString("casOdjezdu") ?: "" // Získání casOdjezdu z arguments
 
         // Display and insert data into LinearLayout
         Log.d("Database", "before")
 
-        displayAndInsertSpojeniData(linearLayout, odkud, kam)
+        displayAndInsertSpojeniData(linearLayout, odkud, kam, casOdjezdu) // Předat casOdjezdu do metody
 
         Log.d("Database", "after")
 
@@ -59,12 +61,9 @@ class Spojeni : Fragment() {
     }
 
 
-    private fun displayAndInsertSpojeniData(linearLayout: LinearLayout, odkud: String, kam: String) {
+
+    private fun displayAndInsertSpojeniData(linearLayout: LinearLayout, odkud: String, kam: String, casOdjezdu: String) {
         // Initialize dbHelper
-
-        Log.d("SpojeniFragment", "Odkud: $odkud, Kam: $kam")
-
-
         val dbHelper = DataBaseHandler(requireContext())
 
         Log.d("Database", "before delete")
@@ -78,46 +77,72 @@ class Spojeni : Fragment() {
         val cursor = dbHelper.getSpojeniByOdkudKam(odkud, kam)
 
         while (cursor.moveToNext()) {
-            // Přidejte TextView s hodnotou casOd před každým výpisem spojení
-            val timeDateText = TextView(requireContext())
-            val layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                110 // Změňte výšku podle vašich potřeb
-            )
-            layoutParams.gravity = Gravity.LEFT // Nastavení zarovnání k levému okraji
-            timeDateText.layoutParams = layoutParams
-
-            // Nastavení vertikálního zarovnání na střed
-            timeDateText.gravity = Gravity.CENTER_VERTICAL
-
-            // Odsazení od levého okraje (změňte hodnotu dle potřeby)
-            val leftPadding = 16
-            timeDateText.setPadding(leftPadding, 0, 0, 0)
-
             val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
-            val formattedDate = formatDateTimeToMonth(casOd) + " " + formatDateTimeToTime(casOd)
-            timeDateText.text = formattedDate
-            timeDateText.textSize = 16f
-            timeDateText.setBackgroundResource(R.color.colorSecondary)
-            timeDateText.setTextColor(Color.WHITE)
 
-            linearLayout.addView(timeDateText)
+            // Porovnejte casOd s časem odjezdu
+            if (isCasOdAfter(casOd, casOdjezdu)) {
+                // Přidejte TextView s hodnotou casOd před každým výpisem spojení
+                val timeDateText = TextView(requireContext())
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    110 // Změňte výšku podle vašich potřeb
+                )
+                layoutParams.gravity = Gravity.LEFT // Nastavení zarovnání k levému okraji
+                timeDateText.layoutParams = layoutParams
 
-            // Zde můžete načíst data z databáze a vytvořit výpis spojení pro každý řádek
-            val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
-            val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA)).toInt() // Převedení na celé číslo
+                // Nastavení vertikálního zarovnání na střed
+                timeDateText.gravity = Gravity.CENTER_VERTICAL
 
-            val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
+                // Odsazení od levého okraje (změňte hodnotu dle potřeby)
+                val leftPadding = 16
+                timeDateText.setPadding(leftPadding, 0, 0, 0)
 
-            // Zde vytvořte výpis spojení pro každý řádek a přidejte jej do LinearLayout
-            val formattedCasOd = formatDateTimeToTime(casOd)
-            val formattedCasDo = formatDateTimeToTime(casDo)
-            val entryLayout = createEntryLayout(odkud, kam, formattedCasOd, formattedCasDo, cena, casOd,vehicle)
-            linearLayout.addView(entryLayout)
+                val formattedDate = formatDateTimeToMonth(casOd) + " " + formatDateTimeToTime(casOd)
+                timeDateText.text = formattedDate
+                timeDateText.textSize = 16f
+                timeDateText.setBackgroundResource(R.color.colorSecondary)
+                timeDateText.setTextColor(Color.WHITE)
+
+                linearLayout.addView(timeDateText)
+
+                // Zde můžete načíst data z databáze a vytvořit výpis spojení pro každý řádek
+                val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
+                val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA)).toInt() // Převedení na celé číslo
+                val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
+
+                // Zde vytvořte výpis spojení pro každý řádek a přidejte jej do LinearLayout
+                val formattedCasOd = formatDateTimeToTime(casOd)
+                val formattedCasDo = formatDateTimeToTime(casDo)
+                val entryLayout = createEntryLayout(odkud, kam, formattedCasOd, formattedCasDo, cena, casOd, vehicle)
+                linearLayout.addView(entryLayout)
+            }
         }
 
         cursor.close()
     }
+
+    private fun isCasOdAfter(casOd: String, casOdjezdu: String): Boolean {
+        // Aktuální datum a čas
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis())
+
+        // Přidání aktuálního data a času k casOd
+        val casOdjezdu = "$currentDate $casOdjezdu"
+
+        // Log parsovaného casOdPlny
+        Log.d("ParsedTime", "Parsed casOdPlny: $casOd")
+
+        Log.d("ParsedTime", "Cas odjezdu: $casOdjezdu")
+
+
+        // Porovnání casOdPlny s casOdjezdu
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val timeOd = inputFormat.parse(casOd)
+        val timeOdjezdu = inputFormat.parse(casOdjezdu)
+
+        return timeOd?.after(timeOdjezdu) == true
+    }
+
+
 
     private fun formatDateTimeToTime(dateTime: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
