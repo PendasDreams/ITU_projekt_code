@@ -157,6 +157,12 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return db.delete(TABLE_KOUPENA_JIZDENKA, "$COL_CAS_OD <= ?", arrayOf(casOd))
     }
 
+    fun deleteKoupenaJizdenkaById(id: Int): Int {
+        val db = this.writableDatabase
+        return db.delete(TABLE_KOUPENA_JIZDENKA, "$COL_ID = ?", arrayOf(id.toString()))
+    }
+
+
 
 
 

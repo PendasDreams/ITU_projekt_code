@@ -10,6 +10,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorSecondary">#213374</color>
     <color name="backgroundBlue">#060C24</color>
+    <color name="red">#FF0000</color>
 
 
 </resources>

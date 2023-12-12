@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.ScrollView
 import android.graphics.Color
 import android.view.Gravity
+import android.widget.Button
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -116,13 +117,14 @@ class Jizdenky : Fragment() {
                 continue // Přeskočit tuto jízdenku
             }
 
-            val entryLayout = createEntryLayout(odkud, kam, casOd, casDo, vehicle, cena) // Přidejte typ vozidla
+            val entryLayout = createEntryLayout(id,odkud, kam, casOd, casDo, vehicle, cena) // Přidejte typ vozidla
             linearLayout.addView(entryLayout)
         }
 
         Log.d("DIS", "Displayed ${purchasedTickets.size} jizdenky")
     }
     private fun createEntryLayout(
+        id: Int, // Přidejte ID jako parametr
         odkud: String,
         kam: String,
         casOd: String,
@@ -290,18 +292,6 @@ class Jizdenky : Fragment() {
 
 
 
-        // Create TextView for displaying cena as an integer
-        val textViewCena = TextView(requireContext())
-        val cenaInt = cena.toInt()
-        val cenaText = "$cenaInt Kč"
-        textViewCena.text = cenaText
-        textViewCena.textSize = 16f
-        textViewCena.setTextColor(Color.WHITE)
-
-        // Add TextView for cena to the entryLayout
-        entryLayout.addView(textViewCena)
-
-
         // Create a blue rectangle (modrý obdélník) containing transaction code, date, tariff, and price
         val blueRectangle3 = LinearLayout(requireContext())
         val blueRectangleLayoutParams3 = LinearLayout.LayoutParams(
@@ -363,6 +353,29 @@ class Jizdenky : Fragment() {
 
 // Add the fourth blue rectangle to the entryLayout
         entryLayout.addView(blueRectangle4)
+
+        // Create a red button for "reklamovat" with smaller size
+        val reklamovatButton = Button(requireContext())
+        val reklamovatButtonLayoutParams = LinearLayout.LayoutParams(
+            350, // Nastavte požadovanou šířku tlačítka
+            100  // Nastavte požadovanou výšku tlačítka
+        )
+        reklamovatButtonLayoutParams.gravity = Gravity.RIGHT
+        reklamovatButton.layoutParams = reklamovatButtonLayoutParams
+        reklamovatButton.text = "Reklamovat"
+        reklamovatButton.setTextColor(Color.WHITE)
+        reklamovatButton.setBackgroundResource(R.color.red) // Zde můžete použít vlastní drawable pro pozadí
+        reklamovatButton.setOnClickListener {
+            // Obsluha události pro tlačítko "reklamovat" (co se má stát po kliknutí)
+            // Zde můžete zavolat funkci pro smazání položky z databáze s předáním ID.
+            // Například:
+            dbHelper.deleteKoupenaJizdenkaById(id)
+            // Poté, co je položka smazána z databáze, odstraňte také LinearLayout s touto položkou z view.
+            entryLayout.removeView(entryLayout)
+        }
+        entryLayout.addView(reklamovatButton)
+
+
 
 // Přidejte mezeru pod blueRectangle4
         val spaceBelowBlueRectangle4 = TextView(requireContext())

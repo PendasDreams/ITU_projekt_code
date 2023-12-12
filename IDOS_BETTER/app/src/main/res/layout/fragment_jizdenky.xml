@@ -112,6 +112,8 @@
                     android:textColor="#ffffff"
                     android:layout_gravity="center" />
 
+                
+
                 <!-- Přidejte sem jakékoliv další UI komponenty, které potřebujete pro nová data -->
 
             </LinearLayout>
