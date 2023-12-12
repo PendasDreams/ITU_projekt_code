@@ -100,7 +100,7 @@ class Jizdenky : Fragment() {
         // Aktuální reálný čas
         val currentTimeMillis = System.currentTimeMillis()
 
-        for (data in purchasedTickets) {
+        for ((id, data) in purchasedTickets) { // Změněno na procházení dvojic ID a dat
             val odkud = data.odkud
             val kam = data.kam
             val casOd = data.casOd
@@ -117,7 +117,7 @@ class Jizdenky : Fragment() {
                 continue // Přeskočit tuto jízdenku
             }
 
-            val entryLayout = createEntryLayout(id,odkud, kam, casOd, casDo, vehicle, cena) // Přidejte typ vozidla
+            val entryLayout = createEntryLayout(id, odkud, kam, casOd, casDo, vehicle, cena)
             linearLayout.addView(entryLayout)
         }
 

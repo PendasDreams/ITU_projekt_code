@@ -128,13 +128,19 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return db.rawQuery(query, null)
     }
 
-    fun getKoupenaJizdenkaData(): List<SpojeniData> {
-        val purchasedTickets = mutableListOf<SpojeniData>()
+    fun getKoupenaJizdenkaData(vararg ids: Int): List<Pair<Int, SpojeniData>> {
+        val purchasedTickets = mutableListOf<Pair<Int, SpojeniData>>()
         val db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_KOUPENA_JIZDENKA"
         val cursor = db.rawQuery(query, null)
 
         while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndex(COL_ID))
+            // Pokud jsou zadaná ID a aktuální řádek v databázi nemá ID v seznamu zadaných ID, přeskočte tento řádek.
+            if (ids.isNotEmpty() && !ids.contains(id)) {
+                continue
+            }
+
             val odkud = cursor.getString(cursor.getColumnIndex(COL_ODKUD))
             val kam = cursor.getString(cursor.getColumnIndex(COL_KAM))
             val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
@@ -142,8 +148,8 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
             val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA))
 
-            val purchasedTicket = SpojeniData(odkud, kam, casOd, casDo,vehicle, cena)
-            purchasedTickets.add(purchasedTicket)
+            val purchasedTicket = SpojeniData(odkud, kam, casOd, casDo, vehicle, cena)
+            purchasedTickets.add(Pair(id, purchasedTicket))
         }
 
         cursor.close()
@@ -151,6 +157,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
         return purchasedTickets
     }
+
 
     fun deleteKoupenaJizdenkaByCasOd(casOd: String): Int {
         val db = this.writableDatabase
