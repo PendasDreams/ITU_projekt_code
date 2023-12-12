@@ -33,6 +33,9 @@ class Jizdenky : Fragment() {
     private lateinit var dbHelper: DataBaseHandler
     private lateinit var listView: ListView
 
+    private lateinit var linearLayout: LinearLayout // Add this property
+
+
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -73,7 +76,7 @@ class Jizdenky : Fragment() {
         val scrollView = view.findViewById<ScrollView>(R.id.scrollView)
 
         // Vytvořte nový LinearLayout pro zobrazení nových dat
-        val linearLayout = LinearLayout(requireContext())
+        linearLayout = LinearLayout(requireContext())
         linearLayout.orientation = LinearLayout.VERTICAL
 
         // Insert an initial ticket into the "KoupenaJizdenka" table
@@ -124,7 +127,7 @@ class Jizdenky : Fragment() {
         Log.d("DIS", "Displayed ${purchasedTickets.size} jizdenky")
     }
     private fun createEntryLayout(
-        id: Int, // Přidejte ID jako parametr
+        id: Int,
         odkud: String,
         kam: String,
         casOd: String,
@@ -371,7 +374,7 @@ class Jizdenky : Fragment() {
             // Například:
             dbHelper.deleteKoupenaJizdenkaById(id)
             // Poté, co je položka smazána z databáze, odstraňte také LinearLayout s touto položkou z view.
-            entryLayout.removeView(entryLayout)
+            linearLayout.removeView(entryLayout)
         }
         entryLayout.addView(reklamovatButton)
 
