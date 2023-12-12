@@ -6,14 +6,12 @@
     tools:context="Spojeni"
     android:background="@color/backgroundBlue">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary">
 
-        <!-- Název lišty "Historie" v bílém textu -->
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
@@ -25,37 +23,33 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- fragment_spojeni.xml -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <!-- Wrap your existing LinearLayout with a ScrollView -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="60dp"
-        android:padding="16dp"
-        tools:context=".SpojeniFragment">
-
-        <!-- Add the TextView for displaying time and date here -->
-
-
-        <!-- The rest of your layout content -->
-
-
+        android:layout_height="match_parent">
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginTop="60dp"
+            android:padding="16dp"
+            tools:context=".SpojeniFragment">
+
+            <!-- Add the TextView for displaying time and date here -->
 
             <!-- The rest of your layout content -->
 
-        </LinearLayout>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
+                <!-- The rest of your layout content -->
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

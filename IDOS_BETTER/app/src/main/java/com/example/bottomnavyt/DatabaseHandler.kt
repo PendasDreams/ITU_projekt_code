@@ -169,8 +169,15 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             SpojeniData("Praha", "Brno", "2023-12-11 10:00", "2023-11-21 12:00","Tram1", 250.0),
             SpojeniData("semilasso", "husitska", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
             SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
-            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 22:30", "2023-12-11 24:00","Tram1", 180.0),
-            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-11 19:47", "2023-12-11 24:00","Tram1", 80.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 22:30", "2023-12-12 24:00","Tram1", 180.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 19:47", "2023-12-12 24:00","Tram1", 80.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 17:47", "2023-12-12 24:00","Tram1", 70.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 15:47", "2023-12-12 24:00","Tram1", 60.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 13:47", "2023-12-12 24:00","Tram1", 50.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 11:47", "2023-12-12 24:00","Tram1", 40.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 10:47", "2023-12-12 24:00","Tram1", 30.0),
+            SpojeniData("Hlavní nádraží", "Semilasso", "2023-12-12 5:47", "2023-12-12 24:00","Tram1", 20.0),
+
             SpojeniData("Plzeň", "České Budějovice", "2023-11-23 15:45", "2023-11-23 18:30","Tram1", 300.00)
             // Přidávejte další počáteční data podle potřeby
         )
