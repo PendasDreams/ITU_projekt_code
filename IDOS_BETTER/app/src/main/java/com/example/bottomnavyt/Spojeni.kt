@@ -79,8 +79,8 @@ class Spojeni : Fragment() {
         while (cursor.moveToNext()) {
             val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
 
-            // Porovnejte casOd s časem odjezdu
-            if (isCasOdAfter(casOd, casOdjezdu)) {
+            // Compare casOd (departure time) with the current time
+            if (isCasOdInFuture(casOd)) {
                 // Přidejte TextView s hodnotou casOd před každým výpisem spojení
                 val timeDateText = TextView(requireContext())
                 val layoutParams = LinearLayout.LayoutParams(
@@ -111,7 +111,6 @@ class Spojeni : Fragment() {
                 val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
                 val spojeniId = cursor.getLong(cursor.getColumnIndex(COL_ID))
 
-
                 // Zde vytvořte výpis spojení pro každý řádek a přidejte jej do LinearLayout
                 val formattedCasOd = formatDateTimeToTime(casOd)
                 val formattedCasDo = formatDateTimeToTime(casDo)
@@ -123,26 +122,19 @@ class Spojeni : Fragment() {
         cursor.close()
     }
 
-    private fun isCasOdAfter(casOd: String, casOdjezdu: String): Boolean {
+
+    private fun isCasOdInFuture(casOd: String): Boolean {
         // Aktuální datum a čas
-        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis())
+        val currentDate = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(System.currentTimeMillis())
 
-        // Přidání aktuálního data a času k casOd
-        val casOdjezdu = "$currentDate $casOdjezdu"
-
-        // Log parsovaného casOdPlny
-        Log.d("ParsedTime", "Parsed casOdPlny: $casOd")
-
-        Log.d("ParsedTime", "Cas odjezdu: $casOdjezdu")
-
-
-        // Porovnání casOdPlny s casOdjezdu
+        // Porovnání casOd s aktuálním datem a časem
         val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         val timeOd = inputFormat.parse(casOd)
-        val timeOdjezdu = inputFormat.parse(casOdjezdu)
+        val currentTime = inputFormat.parse(currentDate)
 
-        return timeOd?.after(timeOdjezdu) == true
+        return timeOd?.after(currentTime) == true
     }
+
 
 
 

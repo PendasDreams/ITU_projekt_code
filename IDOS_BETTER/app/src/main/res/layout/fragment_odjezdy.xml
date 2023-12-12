@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundBlue"
     android:orientation="vertical"
-    tools:context=".Profile">
+    android:background="@color/backgroundBlue"
+    tools:context=".Finance">
 
-    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/toolbar4"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary">
@@ -20,53 +20,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="Odjezdy"
+            android:text="Spojení"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Obdélník s textem pod lištou -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_gravity="center"
-        android:layout_margin="16dp">
-
-        <!-- Malý modrý obdélník -->
-        <!-- Změna barvy na tmavě fialovou -->
-
-        <!-- Text "Všechny jízdní řády" -->
-        <!-- Tučný text -->
-        <View
-            android:id="@+id/rectangle"
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:background="#310081" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:text="Všechny jízdní řády"
-            android:textColor="#237BFF"
-            android:textSize="16sp"
-            android:textStyle="bold" /> <!-- Zarovnání na levý okraj -->
-
-        <!-- Text "Odkud:" -->
-
-        <!-- Tučný text -->
-
-        <!-- Pole pro zadávání textu s bílou čarou -->
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="94dp"
         android:layout_gravity="center"
         android:layout_margin="16dp">
 
@@ -94,7 +56,7 @@
             android:src="@drawable/baseline_public_globe" />
 
         <EditText
-            android:id="@+id/fromEditText"
+            android:id="@+id/editTextOdkud"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_below="@+id/odkudLabel"
@@ -105,12 +67,13 @@
             android:background="@color/backgroundBlue"
             android:hint="Hlavní nádraží"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@android:color/white"
+            android:inputType="textMultiLine|textCapSentences" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/fromEditText"
+            android:layout_below="@id/editTextOdkud"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="4dp"
             android:layout_marginRight="50dp"
@@ -119,9 +82,10 @@
 
     </RelativeLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="68dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
@@ -130,15 +94,16 @@
             android:id="@+id/firstButtonLayout"
             android:layout_width="179dp"
             android:layout_height="39dp"
+            android:layout_marginLeft="60dp"
             android:background="@drawable/round_button"
             android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:layout_marginLeft="60dp"
-            android:paddingEnd="16dp">
+            android:paddingStart="10dp"
+            android:paddingEnd="13dp">
 
 
             <ImageView
                 android:id="@+id/imageView"
+                android:layout_marginTop="6dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentStart="true"
@@ -146,38 +111,41 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="82dp"
+                android:layout_height="37dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="3dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="-1dp"
                 android:layout_toStartOf="@+id/timeTextView"
                 android:layout_toEndOf="@+id/imageView"
                 android:text="Čas odjezdu:"
                 android:textColor="@color/white" />
 
-            <TextView
+            <EditText
                 android:id="@+id/timeTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="2dp"
-                android:text="21:00"
+                android:layout_marginTop="0dp"
+                android:text="15:00"
                 android:textColor="@color/white" />
+
 
         </RelativeLayout>
 
         <!-- Druhý Button -->
         <RelativeLayout
-            android:id="@+id/firstButtonLayout2"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:id="@+id/buttonHledat"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="60dp"
             android:background="@drawable/round_button"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:gravity="center_vertical"
+            android:onClick="openSpojenifragment"
             android:paddingStart="12dp"
             android:paddingEnd="16dp">
 
@@ -196,16 +164,33 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/Historie_label"
-        android:layout_width="wrap_content"
+        android:id="@+id/historie_label"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="60dp"
         android:text="Historie:"
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/favourite_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="60dp"
+        android:text="Oblíbené jízdy:"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <!-- Tlačítka Historie a Přehled výdajů jsou nyní pod AppBarLayoutem -->
 
 </LinearLayout>
