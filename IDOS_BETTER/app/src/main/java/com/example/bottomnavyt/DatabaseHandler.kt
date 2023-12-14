@@ -45,6 +45,7 @@ data class SpojeniData(
     val cena: Double
 )
 
+
 class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
 
@@ -148,17 +149,42 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return id
     }
 
-    fun displayVyhledavani(historyTextView: TextView) {
+    fun getJizdaByOdkudKam(odkud: String, kam: String): List<SpojeniData> {
+        val jizdy = mutableListOf<SpojeniData>()
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_SPOJENI WHERE $COL_ODKUD = ? AND $COL_KAM = ?"
+        val cursor = db.rawQuery(query, arrayOf(odkud, kam))
+
+        while (cursor.moveToNext()) {
+            val odkud = cursor.getString(cursor.getColumnIndex(COL_ODKUD))
+            val kam = cursor.getString(cursor.getColumnIndex(COL_KAM))
+            val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
+            val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
+            val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
+            val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA))
+
+            val spojeniData = SpojeniData(odkud, kam, casOd, casDo, vehicle, cena)
+            jizdy.add(spojeniData)
+        }
+
+        cursor.close()
+        db.close()
+
+        return jizdy
+    }
+
+    fun displayVyhledavani(): List<String> {
         val vyhledavaniCursor = getAllVyhledavani()
-        val historyStringBuilder = StringBuilder()
+        val historyEntries = mutableListOf<String>()
         while (vyhledavaniCursor.moveToNext()) {
             val odkudValue = vyhledavaniCursor.getString(vyhledavaniCursor.getColumnIndex(COL_ODKUD))
             val kamValue = vyhledavaniCursor.getString(vyhledavaniCursor.getColumnIndex(COL_KAM))
-            historyStringBuilder.append("Odkud: $odkudValue, Kam: $kamValue\n")
+            historyEntries.add("$odkudValue -> $kamValue")
         }
         vyhledavaniCursor.close()
-        historyTextView.text = historyStringBuilder.toString()
+        return historyEntries
     }
+
 
     fun getAllVyhledavani(): Cursor {
         val db = this.readableDatabase
@@ -171,6 +197,9 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.delete(TABLE_VYHLEDAVANI, null, null)
         db.close()
     }
+    // Toto by mohla být funkce pro získání dat o jízdě z databáze na základě místa odkud a kam
+
+
 
     fun getAllKoupenaJizdenka(): Cursor {
         val db = this.readableDatabase
@@ -231,7 +260,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val spojeniData = arrayOf(
             SpojeniData("Praha", "Brno", "2023-12-11 10:00", "2023-11-21 12:00","Tram1", 250.0),
             SpojeniData("semilasso", "husitska", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
-            SpojeniData("Ostrava", "Olomouc", "2023-11-22 09:30", "2023-11-22 11:15","Tram1", 180.0),
+            SpojeniData("Ostrava", "Olomouc", "2024-11-22 09:30", "2024-11-22 11:15","Tram1", 180.0),
             SpojeniData("Hlavní nádraží", "Semilasso", "2024-12-12 22:30", "2023-12-12 24:00","Tram1", 180.0),
             SpojeniData("Hlavní nádraží", "Semilasso", "2024-12-12 19:47", "2023-12-12 24:00","Tram1", 80.0),
             SpojeniData("Hlavní nádraží", "Semilasso", "2024-12-12 17:47", "2023-12-12 24:00","Tram1", 70.0),

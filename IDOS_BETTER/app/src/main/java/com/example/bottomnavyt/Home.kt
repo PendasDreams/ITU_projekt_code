@@ -11,7 +11,10 @@ import com.example.bottomnavyt.History
 import android.widget.EditText
 import android.widget.Toast
 import DataBaseHandler
+import android.app.AlertDialog
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.TextView
 
 
@@ -30,6 +33,7 @@ class Home : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,18 +42,26 @@ class Home : Fragment() {
 
         dbHelper = DataBaseHandler(requireContext())
 
+        val historyListView = view.findViewById<ListView>(R.id.historyListView)
 
-        val historyTextView = view.findViewById<TextView>(R.id.historyTextView)
+        // Call the displayVyhledavani function to get the history entries
+        val historyEntries = dbHelper.displayVyhledavani()
+
+        val historyAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, historyEntries)
+        historyListView.adapter = historyAdapter
+
+        historyListView.setOnItemClickListener { _, _, position, _ ->
+            val selectedEntry = historyAdapter.getItem(position)
+            // Now you have the selected history entry, do something with it
+            if (selectedEntry != null) {
+                //handleHistoryItemClick(selectedEntry)
+            }
+        }
 
         val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)
         val editTextOdkud = view.findViewById<EditText>(R.id.editTextOdkud)
         val editTextKam = view.findViewById<EditText>(R.id.editTextKam)
         val editTextCasOdjezdu = view.findViewById<EditText>(R.id.timeTextView) // Přidáno pro získání času odjezdu
-
-
-
-        dbHelper.displayVyhledavani(historyTextView)
-
 
         buttonHledat.setOnClickListener {
             var odkud = editTextOdkud.text.toString()
@@ -81,18 +93,11 @@ class Home : Fragment() {
 
             Log.d("HomeFragment", "Vyhledávání bylo vloženo: Odkud: $odkud, Kam: $kam, Čas odjezdu: $casOdjezdu")
 
-
-
-
             openSpojeniFragment(odkud, kam, casOdjezdu)
         }
 
-
-
         return view
     }
-
-
 
 
     fun openSpojeniFragment(odkud: String, kam: String, casOdjezdu: String) {
@@ -111,22 +116,6 @@ class Home : Fragment() {
 
 
 
-    fun openPrehledVydajuFragment() {
-        val expensesOverviewFragment = ExpensesOverview.newInstance("param1", "param2")
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, expensesOverviewFragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
-
-    private fun openAddCreditFragment() {
-        val addCreditFragment = AddCredit.newInstance() // Replace with the actual new fragment class
-        val transaction = parentFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_layout, addCreditFragment) // Use your container id
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
 
     companion object {
         private const val ARG_PARAM1 = "param1"
