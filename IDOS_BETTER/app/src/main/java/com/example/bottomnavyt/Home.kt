@@ -16,6 +16,10 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import java.util.Date
+import java.text.SimpleDateFormat
+import java.util.Locale
+
 
 
 class Home : Fragment() {
@@ -54,7 +58,7 @@ class Home : Fragment() {
             val selectedEntry = historyAdapter.getItem(position)
             // Now you have the selected history entry, do something with it
             if (selectedEntry != null) {
-                val currentTime = "15:00" // Získání aktuálního času
+                val currentTime = getCurrentTime() // Získání aktuálního času
                 val entryParts = selectedEntry.split("->")
                 if (entryParts.size == 2) {
                     val odkud = entryParts[0].trim()
@@ -119,6 +123,12 @@ class Home : Fragment() {
     private fun isCasOdjezduValid(casOdjezdu: String): Boolean {
         val timeRegex = Regex("^([01]?[0-9]|2[0-3]):[0-5][0-9]\$")
         return timeRegex.matches(casOdjezdu)
+    }
+
+    fun getCurrentTime(): String {
+        val currentTime = Date()
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return dateFormat.format(currentTime)
     }
 
 
