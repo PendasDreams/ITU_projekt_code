@@ -175,15 +175,17 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     fun displayVyhledavani(): List<String> {
         val vyhledavaniCursor = getAllVyhledavani()
-        val historyEntries = mutableListOf<String>()
+        val historyEntries = mutableSetOf<String>() // Použijeme Set pro uchování unikátních položek
         while (vyhledavaniCursor.moveToNext()) {
             val odkudValue = vyhledavaniCursor.getString(vyhledavaniCursor.getColumnIndex(COL_ODKUD))
             val kamValue = vyhledavaniCursor.getString(vyhledavaniCursor.getColumnIndex(COL_KAM))
-            historyEntries.add("$odkudValue -> $kamValue")
+            val entry = "$odkudValue -> $kamValue"
+            historyEntries.add(entry) // Přidáme pouze unikátní položky
         }
         vyhledavaniCursor.close()
-        return historyEntries
+        return historyEntries.toList()
     }
+
 
 
     fun getAllVyhledavani(): Cursor {
