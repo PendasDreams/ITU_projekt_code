@@ -54,9 +54,16 @@ class Home : Fragment() {
             val selectedEntry = historyAdapter.getItem(position)
             // Now you have the selected history entry, do something with it
             if (selectedEntry != null) {
-                //handleHistoryItemClick(selectedEntry)
+                val currentTime = "15:00" // Získání aktuálního času
+                val entryParts = selectedEntry.split("->")
+                if (entryParts.size == 2) {
+                    val odkud = entryParts[0].trim()
+                    val kam = entryParts[1].trim()
+                    openSpojeniFragment(odkud, kam, currentTime)
+                }
             }
         }
+
 
         val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)
         val editTextOdkud = view.findViewById<EditText>(R.id.editTextOdkud)
