@@ -230,6 +230,16 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/historyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="60dp"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/favourite_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

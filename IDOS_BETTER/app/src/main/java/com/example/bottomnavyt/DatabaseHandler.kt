@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.example.bottomnavyt.History_obj
 import android.database.Cursor
+import android.widget.TextView
 
 
 const val TAG = "DataBaseHandler"
@@ -30,6 +31,9 @@ val TABLE_KOUPENA_JIZDENKA = "KoupeneSpojeni"
 val COL_SPOJENI_ID = "Koupene_spojeni_ID"
 
 val COL_VEHICLE ="vozidlo"
+
+val TABLE_VYHLEDAVANI = "VyhledavaneSpojeni"
+
 
 
 data class SpojeniData(
@@ -58,6 +62,16 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db?.execSQL(createTable)
 
         Log.d("Database", "Table created")
+
+        val createVyhledavaniTable =
+            "CREATE TABLE IF NOT EXISTS $TABLE_VYHLEDAVANI (" +
+                    "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "$COL_ODKUD TEXT," + // Use TEXT instead of VARCHAR(255)
+                    "$COL_KAM TEXT)"     // Use TEXT instead of VARCHAR(255)
+        db?.execSQL(createVyhledavaniTable)
+
+        Log.d("Database", "Table created")
+
 
 
 
@@ -120,6 +134,42 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val id = db.insert(TABLE_KOUPENA_JIZDENKA, null, contentValues)
         db.close()
         return id
+    }
+
+
+    fun insertVyhledavani(odkud: String, kam: String): Long {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(COL_ODKUD, odkud)
+            put(COL_KAM, kam)
+        }
+        val id = db.insert(TABLE_VYHLEDAVANI, null, contentValues)
+        db.close()
+        return id
+    }
+
+    fun displayVyhledavani(historyTextView: TextView) {
+        val vyhledavaniCursor = getAllVyhledavani()
+        val historyStringBuilder = StringBuilder()
+        while (vyhledavaniCursor.moveToNext()) {
+            val odkudValue = vyhledavaniCursor.getString(vyhledavaniCursor.getColumnIndex(COL_ODKUD))
+            val kamValue = vyhledavaniCursor.getString(vyhledavaniCursor.getColumnIndex(COL_KAM))
+            historyStringBuilder.append("Odkud: $odkudValue, Kam: $kamValue\n")
+        }
+        vyhledavaniCursor.close()
+        historyTextView.text = historyStringBuilder.toString()
+    }
+
+    fun getAllVyhledavani(): Cursor {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_VYHLEDAVANI"
+        return db.rawQuery(query, null)
+    }
+
+    fun deleteAllVyhledavani() {
+        val db = this.writableDatabase
+        db.delete(TABLE_VYHLEDAVANI, null, null)
+        db.close()
     }
 
     fun getAllKoupenaJizdenka(): Cursor {

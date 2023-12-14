@@ -10,11 +10,17 @@ import android.widget.ImageView
 import com.example.bottomnavyt.History
 import android.widget.EditText
 import android.widget.Toast
+import DataBaseHandler
+import android.util.Log
+import android.widget.TextView
 
 
 class Home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var dbHelper: DataBaseHandler
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +36,20 @@ class Home : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        dbHelper = DataBaseHandler(requireContext())
+
+
+        val historyTextView = view.findViewById<TextView>(R.id.historyTextView)
+
         val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)
         val editTextOdkud = view.findViewById<EditText>(R.id.editTextOdkud)
         val editTextKam = view.findViewById<EditText>(R.id.editTextKam)
         val editTextCasOdjezdu = view.findViewById<EditText>(R.id.timeTextView) // Přidáno pro získání času odjezdu
+
+
+
+        dbHelper.displayVyhledavani(historyTextView)
+
 
         buttonHledat.setOnClickListener {
             var odkud = editTextOdkud.text.toString()
@@ -61,6 +77,13 @@ class Home : Fragment() {
                 casOdjezdu = "15:00"
             }
 
+            dbHelper.insertVyhledavani(odkud, kam)
+
+            Log.d("HomeFragment", "Vyhledávání bylo vloženo: Odkud: $odkud, Kam: $kam, Čas odjezdu: $casOdjezdu")
+
+
+
+
             openSpojeniFragment(odkud, kam, casOdjezdu)
         }
 
@@ -68,6 +91,9 @@ class Home : Fragment() {
 
         return view
     }
+
+
+
 
     fun openSpojeniFragment(odkud: String, kam: String, casOdjezdu: String) {
         val spojeniFragment = Spojeni.newInstance(odkud, kam, casOdjezdu)
