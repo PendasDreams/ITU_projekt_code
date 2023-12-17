@@ -37,7 +37,7 @@ class SpojeniFrom : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_spojeni_from, container, false)
+        return inflater.inflate(R.layout.fragment_spoejni_from, container, false)
     }
 
     companion object {
