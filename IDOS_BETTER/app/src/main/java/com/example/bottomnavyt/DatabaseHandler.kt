@@ -4,20 +4,23 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.example.bottomnavyt.History_obj
 import android.database.Cursor
-import android.widget.TextView
 import com.example.bottomnavyt.favouriteListElem
+
+/*
+* Autoři: xnovos14, xpolia05, xdohna52
+*
+* primarně xnovos14, xpolia05 a xdohna52 označeno
+* */
 
 
 const val TAG = "DataBaseHandler"
 
 val DATABASE_NAME = "MyDB"
-val TABLE_NAME = "History"
+
+
 val COL_CAS_OD = "CasOd"
 val COL_CAS_DO = "CasDo"
-val COL_MISTO_OD = "MistoOd"
-val COL_MISTO_DO = "MistoDo"
 val COL_CENA = "Cena"
 
 val TABLE_CREDITS = "Credits"
@@ -55,16 +58,6 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         Log.d("Database", "Creating database")
 
 
-
-        val createTable =
-            "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
-                    "$COL_CAS_OD DATETIME," +
-                    "$COL_CAS_DO DATETIME," +
-                    "$COL_MISTO_OD VARCHAR(255)," +
-                    "$COL_MISTO_DO VARCHAR(255)," +
-                    "$COL_CENA DECIMAL(10,2))"
-        db?.execSQL(createTable)
-
         Log.d("Database", "Table created")
 
         val createVyhledavaniTable =
@@ -83,8 +76,8 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_ODKUD TEXT," +
                     "$COL_KAM TEXT)"
         db?.execSQL(createoblibenaJizdenkaTable)
-
         Log.d("Database", "Table created")
+        //
 
         val createSpojeniTable =
             "CREATE TABLE IF NOT EXISTS $TABLE_SPOJENI (" +
@@ -112,7 +105,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "$COL_CENA DECIMAL(10,2)," +
                     "FOREIGN KEY ($COL_SPOJENI_ID) REFERENCES $TABLE_SPOJENI($COL_ID))"
         db?.execSQL(createKoupenaJizdenkaTable)
-
+        //xpolia05
         val createCreditsTable =
             "CREATE TABLE IF NOT EXISTS $TABLE_CREDITS (" +
                     "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -120,7 +113,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db?.execSQL(createCreditsTable)
 
         Log.d("Database", "Table created")
-
+        //
 
         val initialValues = ContentValues()
         initialValues.put(COL_CREDIT_AMOUNT, 0.0)
@@ -128,10 +121,6 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     }
 
-    fun deleteAllDataFromKoupenaJizdenka(): Int {
-        val db = this.writableDatabase
-        return db.delete(TABLE_KOUPENA_JIZDENKA, null, null)
-    }
     fun insertKoupenaJizdenka(spojeniId: Long, odkud: String, kam: String, casOd: String, casDo: String,vehicle: String, cena: Double): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
@@ -161,31 +150,6 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     @SuppressLint("Range")
-    fun getJizdaByOdkudKam(odkud: String, kam: String): List<SpojeniData> {
-        val jizdy = mutableListOf<SpojeniData>()
-        val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_SPOJENI WHERE $COL_ODKUD = ? AND $COL_KAM = ?"
-        val cursor = db.rawQuery(query, arrayOf(odkud, kam))
-
-        while (cursor.moveToNext()) {
-            val odkud = cursor.getString(cursor.getColumnIndex(COL_ODKUD))
-            val kam = cursor.getString(cursor.getColumnIndex(COL_KAM))
-            val casOd = cursor.getString(cursor.getColumnIndex(COL_CAS_OD))
-            val casDo = cursor.getString(cursor.getColumnIndex(COL_CAS_DO))
-            val vehicle = cursor.getString(cursor.getColumnIndex(COL_VEHICLE))
-            val cena = cursor.getDouble(cursor.getColumnIndex(COL_CENA))
-
-            val spojeniData = SpojeniData(odkud, kam, casOd, casDo, vehicle, cena)
-            jizdy.add(spojeniData)
-        }
-
-        cursor.close()
-        db.close()
-
-        return jizdy
-    }
-
-    @SuppressLint("Range")
     fun displayVyhledavani(): List<String> {
         val vyhledavaniCursor = getAllVyhledavani()
         val historyEntries = mutableSetOf<String>() // Použijeme Set pro uchování unikátních položek
@@ -206,7 +170,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
 
-    //MichaL Dohnal xdohna52
+    //xdohna52
     @SuppressLint("Range")
     fun displayFavourite(): List<favouriteListElem>{
         val favouriteCursor = getAllFavourite()
@@ -223,14 +187,12 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return favEntries.toList()
     }
 
-    //MichaL Dohnal xdohna52
     fun getAllFavourite(): Cursor{
         val  db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_FAVOURITE"
         return  db.rawQuery(query, null)
     }
 
-    //MichaL Dohnal xdohna52
     fun insertFavourite(odkud: String, kam: String) : Long{
         val db = this.writableDatabase
         val selection = "$COL_ODKUD =? AND $COL_KAM =?"
@@ -252,7 +214,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             return -1
         }
     }
-    //MichaL Dohnal xdohna52
+
     fun deleteFavourite(entryId : Int):Boolean{
         val db = this.writableDatabase
         val where = "$COL_ID = ?"
@@ -260,21 +222,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val result = db.delete(TABLE_FAVOURITE, where, whereArgs)
         return  result !=-1
     }
-
-    fun deleteAllVyhledavani() {
-        val db = this.writableDatabase
-        db.delete(TABLE_VYHLEDAVANI, null, null)
-        db.close()
-    }
-    // Toto by mohla být funkce pro získání dat o jízdě z databáze na základě místa odkud a kam
-
-
-
-    fun getAllKoupenaJizdenka(): Cursor {
-        val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_KOUPENA_JIZDENKA"
-        return db.rawQuery(query, null)
-    }
+    //konec xdohna52
 
     @SuppressLint("Range")
     fun getKoupenaJizdenkaData(vararg ids: Int): List<Pair<Int, SpojeniData>> {
@@ -355,48 +303,10 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.close()
     }
 
-    fun insertSpojeni(odkud: String, kam: String): Long {
-        val db = this.writableDatabase
-        val contentValues = ContentValues().apply {
-            put(COL_ODKUD, odkud)
-            put(COL_KAM, kam)
-        }
-        val id = db.insert(TABLE_SPOJENI, null, contentValues)
-        db.close()
-        return id
-    }
-
-    fun getAllSpojeni(): Cursor {
-        val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_SPOJENI"
-        return db.rawQuery(query, null)
-    }
-
     fun getSpojeniById(spojeniId: Long): Cursor {
         val db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_SPOJENI WHERE $COL_ID = ?"
         return db.rawQuery(query, arrayOf(spojeniId.toString()))
-    }
-
-    @SuppressLint("Range")
-    fun getAllOdkudValues(): List<String> {
-        val db = this.readableDatabase
-        val query = "SELECT $COL_ODKUD FROM $TABLE_SPOJENI"
-        val cursor = db.rawQuery(query, null)
-
-        val odkudValues = mutableListOf<String>()
-
-        if (cursor.moveToFirst()) {
-            do {
-                val odkudValue = cursor.getString(cursor.getColumnIndex(COL_ODKUD))
-                odkudValues.add(odkudValue)
-            } while (cursor.moveToNext())
-        }
-
-        cursor.close()
-        db.close()
-
-        return odkudValues
     }
 
     fun getSpojeniByOdkudKam(odkud: String, kam: String): Cursor {
@@ -413,21 +323,14 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_KOUPENA_JIZDENKA")
-        db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_SPOJENI")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_CREDITS")
         onCreate(db)
-
-        // Zde můžete přidat kód pro vložení dat do nově vytvořené tabulky.
-        if (newVersion > oldVersion) {
-            insertInitialData(db)
-        }
     }
 
     fun resetDatabase() {
         val db = writableDatabase
         db.execSQL("DROP TABLE IF EXISTS $TABLE_KOUPENA_JIZDENKA")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_SPOJENI")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_CREDITS")
         onCreate(db)
@@ -435,6 +338,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     // Insert a new credit amount
+    //xpolia05
     fun insertCredit(creditAmount: Double): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
@@ -478,34 +382,5 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         Log.d(TAG, "Fetched total credit: $totalCredit")
         return totalCredit
     }
-
-    private fun insertInitialData(db: SQLiteDatabase?) {
-        val contentValues = ContentValues()
-        contentValues.put(COL_CAS_OD, "DatumCasOd")
-        contentValues.put(COL_CAS_DO, "DatumCasDo")
-        contentValues.put(COL_MISTO_OD, "MistoOd")
-        contentValues.put(COL_MISTO_DO, "MistoDo")
-        contentValues.put(COL_CENA, 100.00) // Příklad ceny
-
-        db?.insert(TABLE_NAME, null, contentValues)
-    }
-
-    // Metoda pro vkládání dat do databáze
-    fun insertData(data: History_obj): Long {
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-
-        contentValues.put(COL_CAS_OD, data.casOd?.toString()) // Předpokládáme, že casOd je String
-        contentValues.put(COL_CAS_DO, data.casDo?.toString()) // Předpokládáme, že casDo je String
-        contentValues.put(COL_MISTO_OD, data.mistoOd)
-        contentValues.put(COL_MISTO_DO, data.mistoDo)
-        contentValues.put(COL_CENA, data.cena.toDouble()) // Převést cenu na Double
-
-        val insertedId = db.insert(TABLE_NAME, null, contentValues)
-        db.close()
-
-        return insertedId
-    }
-
-
+    //konec xpolia05
 }

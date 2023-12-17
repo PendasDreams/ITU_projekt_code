@@ -16,6 +16,10 @@ private const val ARG_PARAM2 = "param2"
  * Use the [More.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+/*
+* Autor:xnovos14
+* */
 class More : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null

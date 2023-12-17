@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+autori: xnovos14, xdohna52
+primárně xnovos14
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +17,6 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary">
 
-        <!-- Název lišty "Historie" v bílém textu -->
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
@@ -242,7 +245,7 @@
         android:dividerHeight="1dp"
         android:textColor="#ffffff"
         android:textSize="15sp" />
-    <!-- Michal Dohnal xdohna52-->
+    <!-- xdohna52-->
     <TextView
         android:id="@+id/favourite_label"
         android:layout_width="match_parent"
@@ -254,7 +257,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold" />
-    <!-- Michal Dohnal xdohna52-->
+
     <ListView
         android:id="@+id/favouriteListView"
         android:layout_width="match_parent"
@@ -270,11 +273,10 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         />
-
+    <!--xdohna52 konec-->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <!-- Tlačítka Historie a Přehled výdajů jsou nyní pod AppBarLayoutem -->
 
 </LinearLayout>

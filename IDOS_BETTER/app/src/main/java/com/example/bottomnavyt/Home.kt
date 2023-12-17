@@ -6,23 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.ImageView
-import com.example.bottomnavyt.History
 import android.widget.EditText
 import android.widget.Toast
 import DataBaseHandler
-import android.app.AlertDialog
-import android.content.Context
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
 import android.widget.ListView
-import android.widget.TextView
 import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
+/*
+* Autoři: xnovos14, xdohna52
+*
+* hlavně xnovos14, části xdohna52 označeny
+* */
 
 class Home : Fragment() {
     private var param1: String? = null
@@ -38,6 +36,7 @@ class Home : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
 
 
     override fun onCreateView(
@@ -70,12 +69,12 @@ class Home : Fragment() {
             }
         }
 
-        //Michal Dohnal xdohna52
+        //xdohna52
         val favouriteListView = view.findViewById<ListView>(R.id.favouriteListView)
         val favouriteEntries = dbHelper.displayFavourite()
         val  favAdapter =  favouriteAdapter( requireActivity() ,favouriteEntries)
         favouriteListView.adapter = favAdapter
-
+        //
 
         val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)
         val editTextOdkud = view.findViewById<EditText>(R.id.editTextOdkud)
@@ -138,9 +137,6 @@ class Home : Fragment() {
         val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         return dateFormat.format(currentTime)
     }
-
-
-
 
     companion object {
         private const val ARG_PARAM1 = "param1"

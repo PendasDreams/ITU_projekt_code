@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.bottomnavyt.databinding.ActivityMainBinding
 
-
+/*
+* Autor:xnovos14
+* */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
@@ -25,22 +27,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.jizdenky -> replaceFragment(Jizdenky())
                 R.id.Vice -> replaceFragment(More())
                 R.id.Finance -> replaceFragment(Finance())
-
-
-
                 else ->{
-
-
-
                 }
 
             }
-
             true
-
         }
-
-
     }
 
     private fun replaceFragment(fragment : Fragment){

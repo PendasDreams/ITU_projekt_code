@@ -1,3 +1,4 @@
+<!--autor: xnovos14-->
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +8,7 @@
     android:background="#000000"
     tools:context=".More">
 
-    <!-- Linear layout to hold all the content vertically -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
         android:background="#000000"
         tools:context=".More">
 
-        <!-- Lišta "Více" -->
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +28,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary">
 
-                <!-- Název lišty "Více" v bílém textu -->
                 <TextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
@@ -41,14 +41,14 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- RelativeLayout for the top bar -->
+
         <RelativeLayout
             android:id="@+id/darkBlueBar"
             android:layout_width="match_parent"
             android:layout_height="59dp"
             android:background="@color/colorSecondary">
 
-            <!-- Image -->
+
             <ImageView
                 android:id="@+id/imageProfile"
                 android:layout_width="40dp"
@@ -57,8 +57,6 @@
                 android:layout_marginStart="16dp"
                 android:src="@drawable/baseline_cestujici" />
 
-            <!-- Name -->
-            <!-- Email -->
             <TextView
                 android:id="@+id/textName"
                 android:layout_width="wrap_content"
@@ -82,14 +80,13 @@
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <!-- Add the rectangular area for displaying data below the top bar -->
+
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/darkBlueBar">
 
-            <!-- LinearLayout pro nová data -->
             <LinearLayout
                 android:id="@+id/dataLayout"
                 android:layout_width="match_parent"
@@ -99,8 +96,6 @@
                 android:textColor="#ffffff"
                 android:layout_margin="16dp">
 
-
-                <!-- ListView pro nová data -->
                 <ListView
                     android:id="@+id/listView"
                     android:layout_width="match_parent"
@@ -111,10 +106,6 @@
                     android:background="#000000"
                     android:textColor="#ffffff"
                     android:layout_gravity="center" />
-
-                
-
-                <!-- Přidejte sem jakékoliv další UI komponenty, které potřebujete pro nová data -->
 
             </LinearLayout>
 

@@ -5,20 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.ImageView
 import android.widget.TextView
 import DataBaseHandler
-import com.example.bottomnavyt.CreditUpdateListener
-import com.example.bottomnavyt.History
 
-
+/*
+* Autoři: xpolia05, xnovos14
+*
+* primárně xpolia05, xnovos14 označeno
+* */
 class Finance : Fragment(), CreditUpdateListener {
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var databaseHandler: DataBaseHandler
 
+    //xnovos14
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -26,7 +28,7 @@ class Finance : Fragment(), CreditUpdateListener {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    //konec xnovos14
     override fun onResume() {
         super.onResume()
         if (::databaseHandler.isInitialized) {
@@ -43,16 +45,6 @@ class Finance : Fragment(), CreditUpdateListener {
 
         val view = inflater.inflate(R.layout.fragment_finance, container, false)
 
-        val buttonHistorie = view.findViewById<RelativeLayout>(R.id.buttonHistorie)
-        buttonHistorie.setOnClickListener {
-            openHistorieFragment()
-        }
-
-        val buttonPrehledVydaju = view.findViewById<RelativeLayout>(R.id.buttonPrehledVydaju)
-        buttonPrehledVydaju.setOnClickListener {
-            openPrehledVydajuFragment()
-        }
-
         val buttonAddEntry = view.findViewById<ImageView>(R.id.addNewEntry)
         buttonAddEntry.setOnClickListener {
             openAddCreditFragment()
@@ -68,25 +60,6 @@ class Finance : Fragment(), CreditUpdateListener {
         val currentCreditTextView = view?.findViewById<TextView>(R.id.currentCredit)
         currentCreditTextView?.text = "Aktuální kredit\n${newCredit} CZK"
     }
-
-    fun openHistorieFragment() {
-        val historieFragment = History.newInstance("param1", "param2")
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, historieFragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
-
-    fun openPrehledVydajuFragment() {
-        val expensesOverviewFragment = ExpensesOverview.newInstance("param1", "param2")
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, expensesOverviewFragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
-
     private fun openAddCreditFragment() {
         val addCreditFragment = AddCredit.newInstance()
         addCreditFragment.updateCreditUpdateListener(this) // Set the listener
@@ -96,6 +69,7 @@ class Finance : Fragment(), CreditUpdateListener {
         transaction.commit()
     }
 
+    //xnovos14
     companion object {
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"

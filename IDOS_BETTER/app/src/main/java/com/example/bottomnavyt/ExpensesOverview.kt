@@ -13,7 +13,9 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-
+/*
+* autor: xpolia05
+* */
 class ExpensesOverview : Fragment() {
 
     private lateinit var lineChart: LineChart

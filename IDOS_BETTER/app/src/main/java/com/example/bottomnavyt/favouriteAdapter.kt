@@ -17,7 +17,6 @@ import java.util.Locale
 /*
 * Author: Michal Dohnal
 * Login : xdohna52
-*
 * */
 interface FavouriteItemClickListener {
     fun onFavouriteItemClick(position: Int)
@@ -80,12 +79,9 @@ class favouriteAdapter(context: FragmentActivity, items: List<favouriteListElem?
     private fun handleButtonClick(item: favouriteListElem, position: Int) {
         // Handle click on the ImageButton
         Toast.makeText(context, "Button clicked for position: $position", Toast.LENGTH_SHORT).show()
-        // You can also use the context to navigate to another activity or fragment if needed
         val dbHelper = DataBaseHandler(context)
         if (dbHelper.deleteFavourite(item.id)) {
             // Entry successfully deleted from the database
-            // You may also want to remove the item from the adapter's data set
-            // and call notifyDataSetChanged() to refresh the ListView
             remove(item)
             notifyDataSetChanged()
         } else {

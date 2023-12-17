@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.ImageView
-import com.example.bottomnavyt.History
 import android.widget.EditText
 import android.widget.Toast
 
+
+/* autot: xnovos14
+ * */
 
 class Odjezdy : Fragment() {
     private var param1: String? = null

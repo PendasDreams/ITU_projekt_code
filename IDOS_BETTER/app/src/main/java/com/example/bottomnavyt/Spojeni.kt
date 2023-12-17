@@ -16,11 +16,10 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
 
-
-
-
-
-
+/*
+* autoři : xnovos14, xdohna52
+* primárně xnovos14
+* */
 class Spojeni : Fragment() {
     private lateinit var dbHelper: DataBaseHandler
 
@@ -59,7 +58,7 @@ class Spojeni : Fragment() {
 
         Log.d("Database", "after")
 
-        //MichaL Dohnal xdohna52
+        //xdohna52
         val add = view.findViewById<ImageButton>(R.id.addFavourite)
 
         add.setOnClickListener(){
@@ -68,6 +67,7 @@ class Spojeni : Fragment() {
             val kam = arguments?.getString("kam")
             dbHelper.insertFavourite(odkud!!, kam!!)
         }
+        //konec xdohna52
 
         return view
     }

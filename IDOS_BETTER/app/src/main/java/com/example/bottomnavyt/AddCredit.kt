@@ -12,6 +12,9 @@ import DataBaseHandler
 import com.example.bottomnavyt.CreditUpdateListener
 import com.example.bottomnavyt.R
 
+/*
+* autor: xpolia05
+* */
 class AddCredit : Fragment() {
 
     // Declare UI components

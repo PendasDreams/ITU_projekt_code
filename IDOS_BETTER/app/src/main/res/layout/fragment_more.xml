@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Autor: xnovos14 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +10,7 @@
     android:background="#000000"
     tools:context=".More">
 
-    <!-- Lišta "Více" -->
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +22,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary">
 
-            <!-- Název lišty "Více" v bílém textu -->
+
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
@@ -40,7 +42,7 @@
         android:layout_height="59dp"
         android:background="@color/colorSecondary">
 
-        <!-- Image -->
+
         <ImageView
             android:id="@+id/imageProfile"
             android:layout_width="40dp"
@@ -49,9 +51,6 @@
             android:layout_marginStart="16dp"
             android:src="@drawable/baseline_cestujici" />
 
-        <!-- Name -->
-
-        <!-- Email -->
 
         <TextView
             android:id="@+id/textName"
