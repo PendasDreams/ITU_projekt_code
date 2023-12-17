@@ -12,8 +12,10 @@ import android.widget.EditText
 import android.widget.Toast
 import DataBaseHandler
 import android.app.AlertDialog
+import android.content.Context
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import java.util.Date
@@ -67,6 +69,12 @@ class Home : Fragment() {
                 }
             }
         }
+
+        val favouriteListView = view.findViewById<ListView>(R.id.favouriteListView)
+        val favouriteEntries = dbHelper.displayFavourite()
+
+        val  favAdapter =  favouriteAdapter( requireActivity() ,favouriteEntries)
+        favouriteListView.adapter = favAdapter
 
 
         val buttonHledat = view.findViewById<RelativeLayout>(R.id.buttonHledat)

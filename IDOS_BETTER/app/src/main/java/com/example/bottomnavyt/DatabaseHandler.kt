@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.bottomnavyt.History_obj
 import android.database.Cursor
 import android.widget.TextView
+import com.example.bottomnavyt.favouriteListElem
 
 
 const val TAG = "DataBaseHandler"
@@ -33,6 +34,8 @@ val COL_SPOJENI_ID = "Koupene_spojeni_ID"
 val COL_VEHICLE ="vozidlo"
 
 val TABLE_VYHLEDAVANI = "VyhledavaneSpojeni"
+
+val TABLE_FAVOURITE = "OblibeneJizdenky"
 
 
 
@@ -74,7 +77,19 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         Log.d("Database", "Table created")
 
 
+        val createoblibenaJizdenkaTable =
+            "CREATE TABLE IF NOT EXISTS $TABLE_FAVOURITE ("+
+                    "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "$COL_ODKUD TEXT," +
+                    "$COL_KAM TEXT)"
+        db?.execSQL(createoblibenaJizdenkaTable)
 
+        Log.d("Database", "Table created")
+
+        val initFavourite = ContentValues()
+        initFavourite.put(COL_ODKUD,"Hlavní nádraží")
+        initFavourite.put(COL_KAM, "Semilasso")
+        db?.insert(TABLE_FAVOURITE, null, initFavourite)
 
         val createSpojeniTable =
             "CREATE TABLE IF NOT EXISTS $TABLE_SPOJENI (" +
@@ -115,6 +130,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val initialValues = ContentValues()
         initialValues.put(COL_CREDIT_AMOUNT, 0.0)
         db?.insert(TABLE_CREDITS, null, initialValues)
+
     }
 
     fun deleteAllDataFromKoupenaJizdenka(): Int {
@@ -149,6 +165,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return id
     }
 
+    @SuppressLint("Range")
     fun getJizdaByOdkudKam(odkud: String, kam: String): List<SpojeniData> {
         val jizdy = mutableListOf<SpojeniData>()
         val db = this.readableDatabase
@@ -173,6 +190,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return jizdy
     }
 
+    @SuppressLint("Range")
     fun displayVyhledavani(): List<String> {
         val vyhledavaniCursor = getAllVyhledavani()
         val historyEntries = mutableSetOf<String>() // Použijeme Set pro uchování unikátních položek
@@ -186,12 +204,33 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return historyEntries.toList()
     }
 
-
-
     fun getAllVyhledavani(): Cursor {
         val db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_VYHLEDAVANI"
         return db.rawQuery(query, null)
+    }
+
+
+    @SuppressLint("Range")
+    fun displayFavourite(): List<favouriteListElem>{
+        val favouriteCursor = getAllFavourite()
+        val favEntries = mutableListOf<favouriteListElem>()
+        while (favouriteCursor.moveToNext()){
+            val fromValue = favouriteCursor.getString(favouriteCursor.getColumnIndex(COL_ODKUD))
+            val toValue = favouriteCursor.getString(favouriteCursor.getColumnIndex(COL_KAM))
+            val text = "$fromValue->$toValue"
+            val id = favouriteCursor.getInt(favouriteCursor.getColumnIndex(COL_ID))
+            val entry = favouriteListElem(text,id)
+            favEntries.add(entry)
+        }
+        favouriteCursor.close()
+        return favEntries.toList()
+    }
+
+    fun getAllFavourite(): Cursor{
+        val  db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_FAVOURITE"
+        return  db.rawQuery(query, null)
     }
 
     fun deleteAllVyhledavani() {
@@ -209,6 +248,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return db.rawQuery(query, null)
     }
 
+    @SuppressLint("Range")
     fun getKoupenaJizdenkaData(vararg ids: Int): List<Pair<Int, SpojeniData>> {
         val purchasedTickets = mutableListOf<Pair<Int, SpojeniData>>()
         val db = this.readableDatabase
@@ -251,6 +291,13 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
 
+    fun deleteFavourite(entryId : Int):Boolean{
+        val db = this.writableDatabase
+        val where = "$COL_ID = ?"
+        val whereArgs = arrayOf(entryId.toString())
+        val result = db.delete(TABLE_FAVOURITE, where, whereArgs)
+        return  result !=-1
+    }
 
 
 
@@ -314,6 +361,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return db.rawQuery(query, arrayOf(spojeniId.toString()))
     }
 
+    @SuppressLint("Range")
     fun getAllOdkudValues(): List<String> {
         val db = this.readableDatabase
         val query = "SELECT $COL_ODKUD FROM $TABLE_SPOJENI"

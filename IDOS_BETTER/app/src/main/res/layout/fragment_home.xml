@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/backgroundBlue"
+    android:orientation="vertical"
     tools:context=".Finance">
 
     <androidx.appcompat.widget.Toolbar
@@ -66,9 +65,9 @@
             android:layout_toLeftOf="@id/menuIcon"
             android:background="@color/backgroundBlue"
             android:hint="Hlavní nádraží"
+            android:inputType="textMultiLine|textCapSentences"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:inputType="textMultiLine|textCapSentences" />
+            android:textColorHint="@android:color/white" />
 
         <View
             android:layout_width="match_parent"
@@ -157,10 +156,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_marginTop="6dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentStart="true"
+                android:layout_marginTop="6dp"
                 android:src="@drawable/baseline_watch_time" />
 
             <TextView
@@ -180,11 +179,11 @@
                 android:id="@+id/timeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="15dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
                 android:text="15:00"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="15dp" />
 
 
         </RelativeLayout>
@@ -207,7 +206,6 @@
                 android:id="@+id/imageView2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentStart="true"
                 android:layout_marginLeft="3dp"
                 android:scaleType="center"
                 android:src="@drawable/baseline_search_24_white" />
@@ -233,14 +231,14 @@
     <ListView
         android:id="@+id/historyListView"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="40dp"
         android:layout_weight="1"
         android:background="@color/white"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/black"
+        android:divider="@color/black"
         android:dividerHeight="1dp"
         android:textColor="#ffffff"
         android:textSize="15sp" />
@@ -253,14 +251,30 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="60dp"
         android:text="Oblíbené jízdy:"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/favouriteListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_weight="1"
+        android:background="@color/backgroundBlue"
+        android:choiceMode="singleChoice"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="1dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     <!-- Tlačítka Historie a Přehled výdajů jsou nyní pod AppBarLayoutem -->
 
 </LinearLayout>
