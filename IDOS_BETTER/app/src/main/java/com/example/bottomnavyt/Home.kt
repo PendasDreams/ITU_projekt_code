@@ -70,9 +70,9 @@ class Home : Fragment() {
             }
         }
 
+        //Michal Dohnal xdohna52
         val favouriteListView = view.findViewById<ListView>(R.id.favouriteListView)
         val favouriteEntries = dbHelper.displayFavourite()
-
         val  favAdapter =  favouriteAdapter( requireActivity() ,favouriteEntries)
         favouriteListView.adapter = favAdapter
 

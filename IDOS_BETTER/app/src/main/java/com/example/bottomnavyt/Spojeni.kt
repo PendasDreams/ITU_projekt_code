@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.graphics.Color
 import android.view.Gravity
 import android.widget.Button
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 
 
@@ -57,11 +59,22 @@ class Spojeni : Fragment() {
 
         Log.d("Database", "after")
 
+        //MichaL Dohnal xdohna52
+        val add = view.findViewById<ImageButton>(R.id.addFavourite)
+
+        add.setOnClickListener(){
+            Toast.makeText(context, "addind favourite", Toast.LENGTH_SHORT).show()
+            val odkud = arguments?.getString("odkud")
+            val kam = arguments?.getString("kam")
+            dbHelper.insertFavourite(odkud!!, kam!!)
+        }
+
         return view
     }
 
 
 
+    @SuppressLint("Range")
     private fun displayAndInsertSpojeniData(linearLayout: LinearLayout, odkud: String, kam: String, casOdjezdu: String) {
         // Initialize dbHelper
         val dbHelper = DataBaseHandler(requireContext())
@@ -154,6 +167,7 @@ class Spojeni : Fragment() {
 
 
 
+    @SuppressLint("Range")
     private fun createEntryLayout(
         odkud: String,
         kam: String,

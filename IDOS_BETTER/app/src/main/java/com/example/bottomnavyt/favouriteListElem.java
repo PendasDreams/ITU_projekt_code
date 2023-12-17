@@ -1,5 +1,11 @@
 package com.example.bottomnavyt;
 
+
+/*
+ * Author: Michal Dohnal
+ * Login : xdohna52
+ *
+ * */
 public class favouriteListElem {
     private String text;
     private int id;

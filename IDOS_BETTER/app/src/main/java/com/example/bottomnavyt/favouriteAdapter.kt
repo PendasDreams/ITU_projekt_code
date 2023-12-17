@@ -14,6 +14,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/*
+* Author: Michal Dohnal
+* Login : xdohna52
+*
+* */
 interface FavouriteItemClickListener {
     fun onFavouriteItemClick(position: Int)
     fun onFavouriteItemButtonClick(position: Int)

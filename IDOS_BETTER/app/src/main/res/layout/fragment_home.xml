@@ -231,7 +231,7 @@
     <ListView
         android:id="@+id/historyListView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="40dp"
@@ -242,7 +242,7 @@
         android:dividerHeight="1dp"
         android:textColor="#ffffff"
         android:textSize="15sp" />
-
+    <!-- Michal Dohnal xdohna52-->
     <TextView
         android:id="@+id/favourite_label"
         android:layout_width="match_parent"
@@ -254,11 +254,11 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold" />
-
+    <!-- Michal Dohnal xdohna52-->
     <ListView
         android:id="@+id/favouriteListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="40dp"

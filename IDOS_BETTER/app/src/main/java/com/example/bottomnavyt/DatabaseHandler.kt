@@ -76,7 +76,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
         Log.d("Database", "Table created")
 
-
+        //MichaL Dohnal xdohna52
         val createoblibenaJizdenkaTable =
             "CREATE TABLE IF NOT EXISTS $TABLE_FAVOURITE ("+
                     "$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -85,11 +85,6 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db?.execSQL(createoblibenaJizdenkaTable)
 
         Log.d("Database", "Table created")
-
-        val initFavourite = ContentValues()
-        initFavourite.put(COL_ODKUD,"Hlavní nádraží")
-        initFavourite.put(COL_KAM, "Semilasso")
-        db?.insert(TABLE_FAVOURITE, null, initFavourite)
 
         val createSpojeniTable =
             "CREATE TABLE IF NOT EXISTS $TABLE_SPOJENI (" +
@@ -211,6 +206,7 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
 
+    //MichaL Dohnal xdohna52
     @SuppressLint("Range")
     fun displayFavourite(): List<favouriteListElem>{
         val favouriteCursor = getAllFavourite()
@@ -227,10 +223,42 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return favEntries.toList()
     }
 
+    //MichaL Dohnal xdohna52
     fun getAllFavourite(): Cursor{
         val  db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_FAVOURITE"
         return  db.rawQuery(query, null)
+    }
+
+    //MichaL Dohnal xdohna52
+    fun insertFavourite(odkud: String, kam: String) : Long{
+        val db = this.writableDatabase
+        val selection = "$COL_ODKUD =? AND $COL_KAM =?"
+        val selectionargs = arrayOf(odkud,kam)
+
+        val cursor = db.query(TABLE_FAVOURITE, null, selection, selectionargs, null, null, null)
+        val count = cursor.count
+        cursor.close()
+
+        if(count == 0){
+            val insert = ContentValues()
+            insert.put(COL_ODKUD,"$odkud")
+            insert.put(COL_KAM, "$kam")
+            val result = db?.insert(TABLE_FAVOURITE, null, insert)
+            db.close()
+            return result!!
+        }else{
+            db.close()
+            return -1
+        }
+    }
+    //MichaL Dohnal xdohna52
+    fun deleteFavourite(entryId : Int):Boolean{
+        val db = this.writableDatabase
+        val where = "$COL_ID = ?"
+        val whereArgs = arrayOf(entryId.toString())
+        val result = db.delete(TABLE_FAVOURITE, where, whereArgs)
+        return  result !=-1
     }
 
     fun deleteAllVyhledavani() {
@@ -289,17 +317,6 @@ class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val db = this.writableDatabase
         return db.delete(TABLE_KOUPENA_JIZDENKA, "$COL_ID = ?", arrayOf(id.toString()))
     }
-
-
-    fun deleteFavourite(entryId : Int):Boolean{
-        val db = this.writableDatabase
-        val where = "$COL_ID = ?"
-        val whereArgs = arrayOf(entryId.toString())
-        val result = db.delete(TABLE_FAVOURITE, where, whereArgs)
-        return  result !=-1
-    }
-
-
 
     fun insertInitialSpojeniData() {
 
