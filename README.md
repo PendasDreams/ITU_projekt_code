@@ -3,7 +3,7 @@
 
 
 **Knihovny**
-- V projektu byly použity žádné externí knihonvny mimo androidstudio.
+- V projektu byly použity žádné externí knihonvny mimo androidstudio, pouze standardní knihovny kotlin.
 
 **Autoři**
 - Denis Novosád (xnovos14)
